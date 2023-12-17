@@ -22,6 +22,10 @@
 
         <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
+
+        <sonar.exclusions>
+            src/main/java/org/contourgara/examination1/Examination1Application.java
+        </sonar.exclusions>
     </properties>
 
     <dependencyManagement>

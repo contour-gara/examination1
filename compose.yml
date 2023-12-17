@@ -1,0 +1,47 @@
+version: "3"
+services:
+  app-server:
+    build:
+      context: ./examination1-app-server
+      dockerfile: src/main/docker/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    networks:
+      - exam-nw
+    healthcheck:
+      test: "curl -f http://localhost:8080/actuator/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  postgres:
+    image: postgres:11.9-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: sample
+      TZ: "Asia/Tokyo"
+    networks:
+      - exam-nw
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  sonarqube:
+    image: sonarqube:10.3.0-community
+    ports:
+      - "9000:9000"
+    profiles: [ "local" ]
+
+networks:
+  exam-nw:
+    driver: bridge

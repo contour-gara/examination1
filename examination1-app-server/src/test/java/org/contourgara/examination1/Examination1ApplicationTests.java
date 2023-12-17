@@ -1,4 +1,4 @@
-package org.contourgara.examination1gara;
+package org.contourgara.examination1;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
