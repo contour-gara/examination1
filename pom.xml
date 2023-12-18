@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.contourgara</groupId>
-    <artifactId>examination1</artifactId>
+    <artifactId>examination1-gara</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>examination1</name>
-    <description>examination1</description>
+    <name>examination1-gara</name>
+    <description>examination1-gara</description>
 
     <modules>
         <module>examination1-app-server</module>
