@@ -19,4 +19,8 @@ public class EmployeesController {
   @GetMapping
   @ResponseStatus(OK)
   public void root() {}
+
+  @GetMapping("v1/employees")
+  @ResponseStatus(OK)
+  public void findAllEmployee() {}
 }
