@@ -7,7 +7,7 @@ jobs:
   unit_test:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Set up Java 17
@@ -17,14 +17,14 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: Test
+      - name: Unit test
         run: mvn clean test
 
   integration_test:
     needs: unit_test
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Set up Java 17
@@ -34,10 +34,10 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: build
+      - name: Build
         run: mvn clean package -Dmaven.test.skip=true
 
-      - name: Test
+      - name: Integration test
         working-directory: ./integration-test
         run: mvn clean verify
 
@@ -45,7 +45,8 @@ jobs:
     needs: integration_test
     runs-on: ubuntu-latest
     steps:
-      - uses: ttskch/render-deploy@v1.0.0
+      - name: Deploy
+        uses: ttskch/render-deploy@v1.0.0
         with:
           api-key: ${{ secrets.RENDER_API_KEY }}
           service-id: ${{ secrets.RENDER_SERVICE_ID }}
