@@ -2,10 +2,14 @@ package org.contourgara.examination1.presentation;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
+import org.contourgara.examination1.presentation.response.EmployeeResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 従業員情報のエンドポイントです。
@@ -18,9 +22,18 @@ public class EmployeesController {
    */
   @GetMapping
   @ResponseStatus(OK)
-  public void root() {}
+  public void root() {
+    // 何もしません。
+  }
 
   @GetMapping("v1/employees")
   @ResponseStatus(OK)
-  public void findAllEmployee() {}
+  public AllEmployeesResponse findAllEmployees() {
+    return new AllEmployeesResponse(
+      List.of(
+        new EmployeeResponse("1", "Taro", "Yamada"),
+        new EmployeeResponse("2", "Jiro", "Yamada")
+      )
+    );
+  }
 }
