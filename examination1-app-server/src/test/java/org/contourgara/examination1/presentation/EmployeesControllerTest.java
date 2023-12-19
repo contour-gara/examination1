@@ -38,12 +38,12 @@ class EmployeesControllerTest {
           .when()
           .get("/v1/employees")
           .then()
-          .status(OK);
-//          .body("employees[0].id", equalTo("1"))
-//          .body("employees[0].firstName", equalTo("Taro"))
-//          .body("employees[0].lastName", equalTo("Yamada"))
-//          .body("employees[1].id", equalTo("2"))
-//          .body("employees[1].firstName", equalTo("Jiro"))
-//          .body("employees[1].lastName", equalTo("Yamada"));
+          .status(OK)
+          .body("employees[0].id", equalTo("1"))
+          .body("employees[0].firstName", equalTo("Taro"))
+          .body("employees[0].lastName", equalTo("Yamada"))
+          .body("employees[1].id", equalTo("2"))
+          .body("employees[1].firstName", equalTo("Jiro"))
+          .body("employees[1].lastName", equalTo("Yamada"));
     }
 }
