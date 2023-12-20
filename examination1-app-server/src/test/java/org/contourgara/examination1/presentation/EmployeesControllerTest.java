@@ -1,6 +1,6 @@
 package org.contourgara.examination1.presentation;
 
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.HttpStatus.*;
@@ -48,21 +48,21 @@ class EmployeesControllerTest {
     doReturn(
         List.of(
             new Employee(new EmployeeId("1"), "Taro", "Yamada"),
-            new Employee(new EmployeeId("3"), "Jiro", "Yamada")
+            new Employee(new EmployeeId("2"), "Jiro", "Yamada")
         )
     ).when(findAllEmployeesUseCase).execute();
 
     // execute & assert
     given()
-      .when()
-      .get("/v1/employees")
-      .then()
-      .status(OK)
-      .body("employees[0].id", equalTo("1"))
-      .body("employees[0].firstName", equalTo("Taro"))
-      .body("employees[0].lastName", equalTo("Yamada"))
-      .body("employees[1].id", equalTo("2"))
-      .body("employees[1].firstName", equalTo("Jiro"))
-      .body("employees[1].lastName", equalTo("Yamada"));
+        .when()
+        .get("/v1/employees")
+        .then()
+        .status(OK)
+        .body("employees[0].id", equalTo("1"))
+        .body("employees[0].firstName", equalTo("Taro"))
+        .body("employees[0].lastName", equalTo("Yamada"))
+        .body("employees[1].id", equalTo("2"))
+        .body("employees[1].firstName", equalTo("Jiro"))
+        .body("employees[1].lastName", equalTo("Yamada"));
     }
 }

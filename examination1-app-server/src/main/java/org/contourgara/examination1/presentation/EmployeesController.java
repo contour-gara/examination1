@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class EmployeesController {
   private final FindAllEmployeesUseCase findAllEmployeesUseCase;
+
   /**
    * root URL にアクセスされた場合、ステータスコード 200 を返します。
    */
