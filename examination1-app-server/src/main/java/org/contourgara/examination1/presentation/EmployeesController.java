@@ -2,9 +2,9 @@ package org.contourgara.examination1.presentation;
 
 import static org.springframework.http.HttpStatus.OK;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
-import org.contourgara.examination1.presentation.response.EmployeeResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/")
+@RequiredArgsConstructor
 public class EmployeesController {
+  private final FindAllEmployeesUseCase findAllEmployeesUseCase;
   /**
    * root URL にアクセスされた場合、ステータスコード 200 を返します。
    */
@@ -28,11 +30,6 @@ public class EmployeesController {
   @GetMapping("v1/employees")
   @ResponseStatus(OK)
   public AllEmployeesResponse findAllEmployees() {
-    return new AllEmployeesResponse(
-      List.of(
-        new EmployeeResponse("1", "Taro", "Yamada"),
-        new EmployeeResponse("2", "Jiro", "Yamada")
-      )
-    );
+    return AllEmployeesResponse.of(findAllEmployeesUseCase.execute());
   }
 }
