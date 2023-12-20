@@ -14,6 +14,13 @@ public record Employee(
     String firstName,
     String lastName
 ) {
+  /**
+   * Employee を初期化します。
+   *
+   * @param employeeId 従業員 ID です。null であってはなりません。
+   * @param firstName 名前です。null であってはなりません。
+   * @param lastName 名字です。null であってはなりません。
+   */
   public Employee {
     if (isNull(employeeId)) throw new IllegalArgumentException("従業員 ID は null であってはなりません。");
     if (isNull(firstName)) throw new IllegalArgumentException("名前は null であってはなりません。");
