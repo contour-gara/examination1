@@ -43,4 +43,11 @@ class EmployeeIdTest {
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("従業員 ID は数字です。");
   }
+
+  @Test
+  void idが空文字のオブジェクトを生成できる() {
+    // execute & assert
+    assertThatCode(() -> EmployeeId.createEmptyId())
+      .doesNotThrowAnyException();
+  }
 }
