@@ -1,9 +1,9 @@
 package org.contourgara.examination1.domain.model;
 
+import static org.apache.commons.lang3.StringUtils.isNumeric;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-
-import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 /**
  * EmployeeId クラスは従業員 ID を表すクラスです。
@@ -25,5 +25,19 @@ public class EmployeeId {
     }
 
     this.value = value;
+  }
+
+  /**
+   * 従業員 ID が空文字の EmployeeId が作成されます。
+   */
+  private EmployeeId() {
+    this.value = "";
+  }
+
+  /**
+   * 従業員 ID が空文字の EmployeeId が作成されます。
+   */
+  public static EmployeeId createEmptyId() {
+    return new EmployeeId();
   }
 }
