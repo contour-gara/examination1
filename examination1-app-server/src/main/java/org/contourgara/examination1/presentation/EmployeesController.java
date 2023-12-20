@@ -2,14 +2,13 @@ package org.contourgara.examination1.presentation;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import java.util.List;
 import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
 import org.contourgara.examination1.presentation.response.EmployeeResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * 従業員情報のエンドポイントです。
