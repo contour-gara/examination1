@@ -15,6 +15,7 @@ public record Employee(
     String lastName
 ) {
   public Employee {
+    if (isNull(employeeId)) throw new IllegalArgumentException("従業員 ID は null であってはなりません。");
     if (isNull(firstName)) throw new IllegalArgumentException("名前は null であってはなりません。");
   }
 }
