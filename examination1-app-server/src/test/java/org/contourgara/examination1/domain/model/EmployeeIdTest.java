@@ -1,10 +1,10 @@
 package org.contourgara.examination1.domain.model;
 
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import static org.assertj.core.api.Assertions.*;
 
 class EmployeeIdTest {
   @ParameterizedTest
@@ -46,8 +46,13 @@ class EmployeeIdTest {
 
   @Test
   void idが空文字のオブジェクトを生成できる() {
-    // execute & assert
-    assertThatCode(() -> EmployeeId.createEmptyId())
-      .doesNotThrowAnyException();
+    // setup
+    EmployeeId sut = EmployeeId.createEmptyId();
+
+    // execute
+    String actual = sut.getValue();
+
+    // expected
+    assertThat(actual).isEmpty();
   }
 }
