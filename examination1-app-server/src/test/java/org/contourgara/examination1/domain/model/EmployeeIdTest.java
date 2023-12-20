@@ -25,6 +25,17 @@ class EmployeeIdTest {
 
   @ParameterizedTest
   @CsvSource(textBlock = """
+    1
+    999999999
+    """)
+  void idが有効な数字の場合例外が飛ばない(String value) {
+    // execute & assert
+    assertThatCode(() -> new EmployeeId(value))
+      .doesNotThrowAnyException();
+  }
+
+  @ParameterizedTest
+  @CsvSource(textBlock = """
     null
     数字
     abc
