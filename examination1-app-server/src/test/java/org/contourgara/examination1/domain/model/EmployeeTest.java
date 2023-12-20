@@ -24,4 +24,12 @@ class EmployeeTest {
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("名前は null であってはなりません。");
   }
+
+  @Test
+  void 名字がnullの場合例外が飛ぶ() {
+    // setup
+    assertThatCode(() -> new Employee(EMPLOYEE_ID, FIRST_NAME, null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("名字は null であってはなりません。");
+  }
 }
