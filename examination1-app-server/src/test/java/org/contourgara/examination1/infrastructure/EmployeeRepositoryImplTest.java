@@ -1,5 +1,6 @@
 package org.contourgara.examination1.infrastructure;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
@@ -29,6 +30,17 @@ class EmployeeRepositoryImplTest {
         new Employee(new EmployeeId("1"), "Taro", "Yamada"),
         new Employee(new EmployeeId("2"), "Jiro", "Yamada")
     );
+
+    assertThat(actual).isEqualTo(expected);
+  }
+
+  @Test
+  void 全件取得で0件だった場合() {
+    // execute
+    List<Employee> actual = sut.findAll();
+
+    // assert
+    List<Employee> expected = emptyList();
 
     assertThat(actual).isEqualTo(expected);
   }
