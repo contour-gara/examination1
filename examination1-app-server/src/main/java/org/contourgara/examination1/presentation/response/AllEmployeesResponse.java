@@ -5,7 +5,7 @@ import java.util.List;
 import org.contourgara.examination1.domain.model.Employee;
 
 /**
- * 従業員のレスポンス用オブジェクトを複数格納できるオブジェクトです。
+ * AllEmployeesResponse は従業員のレスポンス用オブジェクトを複数格納できるオブジェクトです。
  *
  * @param employeeResponses 従業員のレスポンス用オブジェクトの List。
  */

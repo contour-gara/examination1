@@ -28,6 +28,11 @@ public class EmployeesController {
     // 何もしません。
   }
 
+  /**
+   * 全ての従業員を返します。
+   *
+   * @return 全ての従業員の JSON。
+   */
   @GetMapping("v1/employees")
   @ResponseStatus(OK)
   public AllEmployeesResponse findAllEmployees() {

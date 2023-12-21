@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.contourgara.examination1.domain.model.Employee;
 
 /**
- * 従業員を表すレスポンス用オブジェクトです。
+ * EmployeeResponse は従業員を表すレスポンス用オブジェクトです。
  *
  * @param id 従業員 ID。
  * @param firstName 名前。
