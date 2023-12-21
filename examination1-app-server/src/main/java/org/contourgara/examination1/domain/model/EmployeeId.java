@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
- * EmployeeId クラスは従業員 ID を表すクラスです。
+ * EmployeeId クラスは従業員 ID を表すモデルです。
  */
 @EqualsAndHashCode
 @Getter
