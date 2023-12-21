@@ -17,6 +17,10 @@ services:
       timeout: 5s
       retries: 3
       start_period: 30s
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sample
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
 
   postgres:
     image: postgres:11.9-alpine
