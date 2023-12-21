@@ -1,7 +1,1 @@
 employees:
-  - id: "1"
-    first_name: "Taro"
-    last_name: "Yamada"
-  - id: "2"
-    first_name: "Jiro"
-    last_name: "Yamada"

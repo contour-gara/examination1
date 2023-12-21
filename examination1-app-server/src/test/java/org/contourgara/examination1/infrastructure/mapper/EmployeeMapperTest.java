@@ -7,8 +7,6 @@ import com.github.database.rider.core.api.configuration.DBUnit;
 import com.github.database.rider.core.api.connection.ConnectionHolder;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.junit5.api.DBRider;
-import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,14 +25,9 @@ class EmployeeMapperTest {
   @Autowired
   EmployeeMapper sut;
 
-  @BeforeAll
-  static void setUpAll() {
-    Flyway.configure().dataSource(DB_URL, DB_USER, DB_PASSWORD).load().migrate();
-  }
-
   @Test
   @ExpectedDataSet(value = "datasets/expected/migration-check.yml")
-  void マイグレーションの挙動確認() {
+  void 空のテーブルが作成される() {
     // 何もしません
   }
 }
