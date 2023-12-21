@@ -3,7 +3,6 @@ package org.contourgara.examination1.application;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.contourgara.examination1.domain.model.Employee;
-import org.contourgara.examination1.domain.model.EmployeeId;
 import org.contourgara.examination1.domain.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
