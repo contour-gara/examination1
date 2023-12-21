@@ -31,7 +31,7 @@ class EmployeeMapperTest {
   EmployeeMapper sut;
 
   @Nested
-  class 全件検索 {
+  class 全件取得 {
     @Test
     @DataSet(value = "datasets/setup/find-all.yml")
     @ExpectedDataSet(value = "datasets/expected/find-all.yml")
