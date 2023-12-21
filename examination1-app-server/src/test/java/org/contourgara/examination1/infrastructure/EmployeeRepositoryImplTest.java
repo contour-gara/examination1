@@ -1,20 +1,23 @@
 package org.contourgara.examination1.infrastructure;
 
-import org.contourgara.examination1.domain.model.Employee;
-import org.contourgara.examination1.domain.model.EmployeeId;
-import org.contourgara.examination1.domain.repository.EmployeeRepository;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
+import java.util.List;
+import org.contourgara.examination1.domain.model.Employee;
+import org.contourgara.examination1.domain.model.EmployeeId;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+
 class EmployeeRepositoryImplTest {
-  @Autowired
-  EmployeeRepository sut;
+  @InjectMocks
+  EmployeeRepositoryImpl sut;
+
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+  }
 
   @Test
   void 全件取得する場合() {
