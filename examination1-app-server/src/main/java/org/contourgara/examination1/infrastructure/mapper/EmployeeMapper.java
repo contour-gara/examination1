@@ -1,10 +1,9 @@
 package org.contourgara.examination1.infrastructure.mapper;
 
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.contourgara.examination1.infrastructure.entity.EmployeeEntity;
-
-import java.util.List;
 
 /**
  * EmployeeMapper は従業員テーブルにアクセスするためのマッパーです。
