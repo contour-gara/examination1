@@ -1,4 +1,4 @@
-package org.contourgara.examination1.infrastructure;
+package org.contourgara.examination1.infrastructure.repository;
 
 import java.util.List;
 import org.contourgara.examination1.domain.model.Employee;
