@@ -18,6 +18,12 @@ public interface EmployeeMapper {
   @Select("SELECT id, first_name, last_name FROM employees")
   List<EmployeeEntity> findAll();
 
+  /**
+   * 従業員テーブルにあるデータから ID で検索します。
+   *
+   * @param id 検索したい ID。
+   * @return 従業員エンティティ。
+   */
   @Select("SELECT id, first_name, last_name FROM employees WHERE #{id}")
   EmployeeEntity findById(String id);
 }
