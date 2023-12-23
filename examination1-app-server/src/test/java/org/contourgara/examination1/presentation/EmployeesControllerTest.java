@@ -70,11 +70,21 @@ class EmployeesControllerTest {
   @Nested
   class ID検索 {
     @Test
-    void ID指定で従業員が取得できる() {
+    void ID1の従業員が取得できる() {
       // execute & assert
       given()
           .when()
           .get("/v1/employees/1")
+          .then()
+          .status(OK);
+    }
+
+    @Test
+    void ID2の従業員が取得できる() {
+      // execute & assert
+      given()
+          .when()
+          .get("/v1/employees/2")
           .then()
           .status(OK);
     }
