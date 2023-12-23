@@ -46,7 +46,7 @@ public class EmployeesController {
   /**
    * ID 指定された従業員情報を返します。
    *
-   * @param id 検索したい従業員の ID。
+   * @param id 取得したい従業員の ID。
    * @return 従業員情報。
    */
   @GetMapping("v1/employees/{id}")

@@ -1,5 +1,6 @@
 package org.contourgara.examination1.application;
 
+import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,5 +29,14 @@ class FindEmployeeByIdUseCaseTest {
     Employee expected = new Employee(new EmployeeId("1"), "Taro", "Yamada");
 
     assertThat(actual).isEqualTo(expected);
+  }
+
+  @Test
+  void 従業員が取得できなかった場合() {
+    // setup
+    // execute & assert
+    assertThatThrownBy(() -> sut.execute("0"))
+        .isInstanceOf(NotFoundEmployeeException.class)
+        .hasMessage("id = 0");
   }
 }
