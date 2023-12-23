@@ -11,7 +11,16 @@ import java.util.Optional;
 @Service
 public class FindEmployeeByIdUseCase {
   public Employee execute(String id) {
-    Optional<Employee> tmp = Optional.of(new Employee(new EmployeeId("1"), "Taro", "Yamada"));
+    Optional<Employee> tmp;
+
+    if (id.equals("1")) {
+      tmp = Optional.of(new Employee(new EmployeeId("1"), "Taro", "Yamada"));
+    } else if (id.equals("2")) {
+      tmp = Optional.of(new Employee(new EmployeeId("2"), "Jiro", "Yamada"));
+    } else {
+      tmp = Optional.empty();
+    }
+
     return tmp.orElseThrow(() -> new NotFoundEmployeeException(id));
   }
 }

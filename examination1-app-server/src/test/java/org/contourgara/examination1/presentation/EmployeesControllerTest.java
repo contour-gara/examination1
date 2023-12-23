@@ -9,6 +9,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
+import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
 import org.junit.jupiter.api.BeforeEach;
@@ -76,6 +77,11 @@ class EmployeesControllerTest {
   class ID検索 {
     @Test
     void ID1の従業員が取得できる() {
+      // setup
+      doReturn(new Employee(new EmployeeId("1"), "Taro", "Yamada"))
+          .when(findEmployeeByIdUseCase)
+          .execute("1");
+
       // execute & assert
       given()
           .when()
@@ -89,6 +95,11 @@ class EmployeesControllerTest {
 
     @Test
     void ID2の従業員が取得できる() {
+      // setup
+      doReturn(new Employee(new EmployeeId("2"), "Jiro", "Yamada"))
+          .when(findEmployeeByIdUseCase)
+          .execute("2");
+
       // execute & assert
       given()
           .when()
@@ -102,6 +113,11 @@ class EmployeesControllerTest {
 
     @Test
     void 存在しないIDで検索した場合() {
+      // setup
+      doThrow(new NotFoundEmployeeException("0"))
+          .when(findEmployeeByIdUseCase)
+          .execute("0");
+
       // execute & assert
       given()
           .when()
