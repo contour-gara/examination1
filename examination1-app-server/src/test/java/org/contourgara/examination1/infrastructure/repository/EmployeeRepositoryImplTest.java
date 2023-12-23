@@ -87,5 +87,21 @@ class EmployeeRepositoryImplTest {
 
       assertThat(actual).isEqualTo(expected);
     }
+
+    @Test
+    void ID検索で見つからない場合() {
+      // setup
+      doReturn(null)
+          .when(mapper)
+          .findById("0");
+
+      // execute
+      Optional<Employee> actual = sut.findById("0");
+
+      // assert
+      Optional<Employee> expected = Optional.empty();
+
+      assertThat(actual).isEqualTo(expected);
+    }
   }
 }
