@@ -76,7 +76,10 @@ class EmployeesControllerTest {
           .when()
           .get("/v1/employees/1")
           .then()
-          .status(OK);
+          .status(OK)
+          .body("id", equalTo("1"))
+          .body("firstName", equalTo("Taro"))
+          .body("lastName", equalTo("Yamada"));
     }
 
     @Test
@@ -86,7 +89,10 @@ class EmployeesControllerTest {
           .when()
           .get("/v1/employees/2")
           .then()
-          .status(OK);
+          .status(OK)
+          .body("id", equalTo("2"))
+          .body("firstName", equalTo("Jiro"))
+          .body("lastName", equalTo("Yamada"));
     }
   }
 }
