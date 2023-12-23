@@ -17,4 +17,7 @@ public interface EmployeeMapper {
    */
   @Select("SELECT id, first_name, last_name FROM employees")
   List<EmployeeEntity> findAll();
+
+  @Select("SELECT id, first_name, last_name FROM employees WHERE #{id}")
+  EmployeeEntity findById(String id);
 }
