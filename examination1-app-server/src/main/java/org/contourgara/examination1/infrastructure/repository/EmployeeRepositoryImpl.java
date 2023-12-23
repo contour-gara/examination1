@@ -1,6 +1,7 @@
 package org.contourgara.examination1.infrastructure.repository;
 
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.repository.EmployeeRepository;
@@ -28,7 +29,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
    * {@inheritDoc}
    */
   @Override
-  public Employee findById(String id) {
-    return mapper.findById(id).convertToModel();
+  public Optional<Employee> findById(String id) {
+    return Optional.of(mapper.findById(id).convertToModel());
   }
 }

@@ -1,6 +1,7 @@
 package org.contourgara.examination1.domain.repository;
 
 import java.util.List;
+import java.util.Optional;
 import org.contourgara.examination1.domain.model.Employee;
 
 /**
@@ -18,7 +19,7 @@ public interface EmployeeRepository {
    * ID 検索による従業員取得を行います。
    *
    * @param id 検索したい従業員 ID。
-   * @return 従業員モデル。
+   * @return 従業員モデルのオプショナル。従業員が見つからなかった場合はからのオプショナルが返ります。
    */
-  Employee findById(String id);
+  Optional<Employee> findById(String id);
 }

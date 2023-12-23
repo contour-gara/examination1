@@ -82,7 +82,8 @@ class EmployeeRepositoryImplTest {
       Optional<Employee> actual = sut.findById("1");
 
       // assert
-      Optional<Employee> expected = Optional.of(new Employee(new EmployeeId("1"), "Taro", "Yamada"));
+      Optional<Employee> expected
+          = Optional.of(new Employee(new EmployeeId("1"), "Taro", "Yamada"));
 
       assertThat(actual).isEqualTo(expected);
     }
