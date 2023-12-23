@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
 import org.contourgara.examination1.infrastructure.entity.EmployeeEntity;
@@ -77,10 +79,10 @@ class EmployeeRepositoryImplTest {
           .findById("1");
 
       // execute
-      Employee actual = sut.findById("1");
+      Optional<Employee> actual = sut.findById("1");
 
       // assert
-      Employee expected = new Employee(new EmployeeId("1"), "Taro", "Yamada");
+      Optional<Employee> expected = Optional.of(new Employee(new EmployeeId("1"), "Taro", "Yamada"));
 
       assertThat(actual).isEqualTo(expected);
     }
