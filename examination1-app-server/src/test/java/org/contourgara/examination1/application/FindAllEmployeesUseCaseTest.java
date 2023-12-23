@@ -26,7 +26,7 @@ class FindAllEmployeesUseCaseTest {
   }
 
   @Test
-  void 全ての従業員が取得できる場合() {
+  void 全ての従業員が取得できる() {
     // setup
     doReturn(
         List.of(
