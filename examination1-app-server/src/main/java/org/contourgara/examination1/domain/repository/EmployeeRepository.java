@@ -10,7 +10,15 @@ public interface EmployeeRepository {
   /**
    * 従業員の全件取得を行います。
    *
-   * @return 全従業員情報。
+   * @return 従業員モデルのリスト。
    */
   List<Employee> findAll();
+
+  /**
+   * ID 検索による従業員取得を行います。
+   *
+   * @param id 検索したい従業員 ID。
+   * @return 従業員モデル。
+   */
+  Employee findById(String id);
 }

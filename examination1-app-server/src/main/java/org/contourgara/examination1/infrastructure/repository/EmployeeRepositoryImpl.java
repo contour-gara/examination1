@@ -23,4 +23,12 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
   public List<Employee> findAll() {
     return mapper.findAll().stream().map(EmployeeEntity::convertToModel).toList();
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Employee findById(String id) {
+    return mapper.findById(id).convertToModel();
+  }
 }
