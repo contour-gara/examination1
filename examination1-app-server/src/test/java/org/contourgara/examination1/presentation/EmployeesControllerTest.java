@@ -106,7 +106,7 @@ class EmployeesControllerTest {
           .status(BAD_REQUEST)
           .body("code", equalTo("0003"))
           .body("message", equalTo("specified employee [id = 0] is not found."))
-          .body("details", equalTo("[]"));
+          .body("details", hasSize(0));
     }
   }
 }
