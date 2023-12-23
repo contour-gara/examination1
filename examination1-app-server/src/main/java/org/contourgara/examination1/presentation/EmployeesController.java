@@ -5,7 +5,9 @@ import static org.springframework.http.HttpStatus.OK;
 import lombok.RequiredArgsConstructor;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +31,7 @@ public class EmployeesController {
   }
 
   /**
-   * 全ての従業員を返します。
+   * 全ての従業員情報を返します。
    *
    * @return 全ての従業員の JSON。
    */
@@ -39,8 +41,13 @@ public class EmployeesController {
     return AllEmployeesResponse.of(findAllEmployeesUseCase.execute());
   }
 
-  @GetMapping("v1/employees/1")
+  /**
+   * ID 指定された従業員情報を返します。
+   *
+   * @param id 検索したい従業員の ID
+   */
+  @GetMapping("v1/employees/{id}")
   @ResponseStatus(OK)
-  public void findEmployeeById() {
+  public void findEmployeeById(@PathVariable("id") String id) {
   }
 }
