@@ -13,7 +13,7 @@ public interface EmployeeMapper {
   /**
    * 従業員テーブルにあるデータを全件取得します。
    *
-   * @return List<EmployeeEntity>。
+   * @return EmployeeEntity の List。
    */
   @Select("SELECT id, first_name, last_name FROM employees")
   List<EmployeeEntity> findAll();
