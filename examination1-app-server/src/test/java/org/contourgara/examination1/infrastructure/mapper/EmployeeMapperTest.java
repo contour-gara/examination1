@@ -61,4 +61,21 @@ class EmployeeMapperTest {
       assertThat(actual).isEqualTo(expected);
     }
   }
+
+  @Nested
+  class ID検索 {
+    @Test
+    @DataSet(value = "datasets/setup/find-by-id.yml")
+    @ExpectedDataSet(value = "datasets/expected/find-by-id.yml")
+    void ID検索できる() {
+      // execute
+      EmployeeEntity actual = sut.findById("1");
+
+      // assert
+      EmployeeEntity expected = new EmployeeEntity("1", "Taro", "Yamada");
+
+
+      assertThat(actual).isEqualTo(expected);
+    }
+  }
 }
