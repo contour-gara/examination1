@@ -39,10 +39,11 @@ class EmployeeTest {
 
   @Nested
   class _100文字以上の場合 {
+    private static final String OVER_100_STRING = "a".repeat(101);
     @Test
     void 名前が100文字以上の場合例外が飛ぶ() {
       // execute & assert
-      assertThatCode(() -> new Employee(EMPLOYEE_ID, "a".repeat(101), LAST_NAME))
+      assertThatCode(() -> new Employee(EMPLOYEE_ID, OVER_100_STRING, LAST_NAME))
           .isInstanceOf(IllegalArgumentException.class)
           .hasMessage("名前は 100 文字以内です。");
     }
@@ -50,7 +51,7 @@ class EmployeeTest {
     @Test
     void 名字が100文字以上の場合例外が飛ぶ() {
       // execute & assert
-      assertThatCode(() -> new Employee(EMPLOYEE_ID, FIRST_NAME, "a".repeat(101)))
+      assertThatCode(() -> new Employee(EMPLOYEE_ID, FIRST_NAME, OVER_100_STRING))
           .isInstanceOf(IllegalArgumentException.class)
           .hasMessage("名字は 100 文字以内です。");
     }
