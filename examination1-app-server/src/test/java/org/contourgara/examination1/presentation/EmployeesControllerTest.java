@@ -10,6 +10,7 @@ import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -66,13 +67,16 @@ class EmployeesControllerTest {
         .body("employees[1].lastName", equalTo("Yamada"));
     }
 
-  @Test
-  void ID指定で従業員が取得できる() {
-    // execute & assert
-    given()
-        .when()
-        .get("/v1/employees/1")
-        .then()
-        .status(OK);
+  @Nested
+  class ID検索 {
+    @Test
+    void ID指定で従業員が取得できる() {
+      // execute & assert
+      given()
+          .when()
+          .get("/v1/employees/1")
+          .then()
+          .status(OK);
+    }
   }
 }

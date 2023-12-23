@@ -38,4 +38,9 @@ public class EmployeesController {
   public AllEmployeesResponse findAllEmployees() {
     return AllEmployeesResponse.of(findAllEmployeesUseCase.execute());
   }
+
+  @GetMapping("v1/employees/1")
+  @ResponseStatus(OK)
+  public void findEmployeeById() {
+  }
 }
