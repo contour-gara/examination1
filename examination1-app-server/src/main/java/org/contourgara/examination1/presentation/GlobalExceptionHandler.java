@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
    * ID 検索した際に従業員が見つからない場合に、このメソッドが実行されます。
    *
    * @param e 従業員が見つからなかった時の例外。
-   * @return エラーレスポンス。コードは 3 で、見つからなかった従業員 ID が含まれます。
+   * @return ErrorResponse。コードは 0003 で、見つからなかった従業員 ID が含まれます。
    */
   @ExceptionHandler(NotFoundEmployeeException.class)
   @ResponseStatus(BAD_REQUEST)

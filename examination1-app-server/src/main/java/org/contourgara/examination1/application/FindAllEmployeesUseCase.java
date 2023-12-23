@@ -17,7 +17,7 @@ public class FindAllEmployeesUseCase {
   /**
    * 従業員の全件取得を実行します。
    *
-   * @return 従業員モデルのリスト。
+   * @return List<Employee>。
    */
   public List<Employee> execute() {
     return repository.findAll();

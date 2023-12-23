@@ -11,6 +11,9 @@ import lombok.Getter;
 @EqualsAndHashCode
 @Getter
 public class EmployeeId {
+  /**
+   * 従業員 ID。
+   */
   private final String value;
 
   /**

@@ -15,7 +15,7 @@ public record EmployeeEntity(String id, String firstName, String lastName) {
   /**
    * 従業員エンティティを従業員モデルに変換します。
    *
-   * @return 従業員モデル。
+   * @return Employee。
    */
   public Employee convertToModel() {
     return new Employee(new EmployeeId(id), firstName, lastName);

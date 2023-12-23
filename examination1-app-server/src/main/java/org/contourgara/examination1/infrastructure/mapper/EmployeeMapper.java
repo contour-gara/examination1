@@ -13,7 +13,7 @@ public interface EmployeeMapper {
   /**
    * 従業員テーブルにあるデータを全件取得します。
    *
-   * @return 従業員エンティティの配列。
+   * @return List<EmployeeEntity>。
    */
   @Select("SELECT id, first_name, last_name FROM employees")
   List<EmployeeEntity> findAll();
@@ -22,7 +22,7 @@ public interface EmployeeMapper {
    * 従業員テーブルにあるデータから ID で検索します。
    *
    * @param id 検索したい ID。
-   * @return 従業員エンティティ。
+   * @return EmployeeEntity。従業員が見つからなかった場合は null が返ります。
    */
   @Select("SELECT id, first_name, last_name FROM employees WHERE id = #{id}")
   EmployeeEntity findById(String id);

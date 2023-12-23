@@ -19,7 +19,7 @@ public record EmployeeResponse(
    * EmployeeResponse を初期化します。
    *
    * @param employee 従業員オブジェクト。
-   * @return 従業員レスポンス用オブジェクト。
+   * @return EmployeeResponse。
    */
   public static EmployeeResponse of(Employee employee) {
     return new EmployeeResponse(

@@ -35,7 +35,7 @@ public class EmployeesController {
   /**
    * 全ての従業員情報を返します。
    *
-   * @return 全ての従業員情報。
+   * @return AllEmployeesResponse。
    */
   @GetMapping("v1/employees")
   @ResponseStatus(OK)
@@ -47,7 +47,7 @@ public class EmployeesController {
    * ID 指定された従業員情報を返します。
    *
    * @param id 取得したい従業員の ID。
-   * @return 従業員情報。
+   * @return EmployeeResponse。
    */
   @GetMapping("v1/employees/{id}")
   @ResponseStatus(OK)

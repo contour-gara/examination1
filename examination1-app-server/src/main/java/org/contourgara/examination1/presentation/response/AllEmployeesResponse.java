@@ -16,7 +16,7 @@ public record AllEmployeesResponse(
    * AllEmployeeResponse を初期化します。
    *
    * @param employees 従業員オブジェクトの List
-   * @return 従業員のレスポンス用オブジェクトの List。
+   * @return AllEmployeesResponse。
    */
   public static AllEmployeesResponse of(List<Employee> employees) {
     return new AllEmployeesResponse(employees.stream().map(EmployeeResponse::of).toList());

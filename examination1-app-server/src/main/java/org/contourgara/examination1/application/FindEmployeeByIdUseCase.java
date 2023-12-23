@@ -18,7 +18,8 @@ public class FindEmployeeByIdUseCase {
    * ID 検索による従業員取得を実行します。
    *
    * @param id 取得したい従業員の ID。
-   * @return 従業員モデル。
+   * @return Employee。
+   * @throws NotFoundEmployeeException 従業員が見つからなかった場合に投げられます。
    */
   public Employee execute(String id) {
     return repository.findById(id).orElseThrow(() -> new NotFoundEmployeeException(id));

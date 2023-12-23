@@ -19,7 +19,7 @@ public interface EmployeeRepository {
    * ID 検索による従業員取得を行います。
    *
    * @param id 検索したい従業員 ID。
-   * @return 従業員モデルのオプショナル。従業員が見つからなかった場合はからのオプショナルが返ります。
+   * @return Optional<Employee>。従業員が見つからなかった場合は空のオプショナルが返ります。
    */
   Optional<Employee> findById(String id);
 }
