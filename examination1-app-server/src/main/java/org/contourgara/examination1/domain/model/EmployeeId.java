@@ -36,6 +36,8 @@ public class EmployeeId {
 
   /**
    * 従業員 ID が空文字の EmployeeId が作成されます。
+   *
+   * @return ID が空文字の EmployeeId。
    */
   public static EmployeeId createEmptyId() {
     return new EmployeeId();
