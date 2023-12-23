@@ -74,8 +74,18 @@ class EmployeeMapperTest {
       // assert
       EmployeeEntity expected = new EmployeeEntity("1", "Taro", "Yamada");
 
-
       assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DataSet(value = "datasets/setup/find-by-id.yml")
+    @ExpectedDataSet(value = "datasets/expected/find-by-id.yml")
+    void ID検索で見つからない場合() {
+      // execute
+      EmployeeEntity actual = sut.findById("0");
+
+      // assert
+      assertThat(actual).isNull();
     }
   }
 }
