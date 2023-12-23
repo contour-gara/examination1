@@ -25,5 +25,7 @@ public record Employee(
     if (isNull(employeeId)) throw new IllegalArgumentException("従業員 ID は null であってはなりません。");
     if (isNull(firstName)) throw new IllegalArgumentException("名前は null であってはなりません。");
     if (isNull(lastName)) throw new IllegalArgumentException("名字は null であってはなりません。");
+    if (firstName.length() > 100) throw new IllegalArgumentException("名前は 100 文字以内です。");
+    if (lastName.length() > 100) throw new IllegalArgumentException("名字は 100 文字以内です。");
   }
 }
