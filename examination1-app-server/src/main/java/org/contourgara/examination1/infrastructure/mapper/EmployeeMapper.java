@@ -24,6 +24,6 @@ public interface EmployeeMapper {
    * @param id 検索したい ID。
    * @return 従業員エンティティ。
    */
-  @Select("SELECT id, first_name, last_name FROM employees WHERE #{id}")
+  @Select("SELECT id, first_name, last_name FROM employees WHERE id = #{id}")
   EmployeeEntity findById(String id);
 }

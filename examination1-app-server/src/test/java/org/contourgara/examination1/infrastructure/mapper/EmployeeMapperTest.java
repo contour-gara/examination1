@@ -78,6 +78,19 @@ class EmployeeMapperTest {
     }
 
     @Test
+    @DataSet(value = "datasets/setup/find-all.yml")
+    @ExpectedDataSet(value = "datasets/expected/find-all.yml")
+    void テーブルにデータが複数あってもID検索できる() {
+      // execute
+      EmployeeEntity actual = sut.findById("1");
+
+      // assert
+      EmployeeEntity expected = new EmployeeEntity("1", "Taro", "Yamada");
+
+      assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
     @DataSet(value = "datasets/setup/find-by-id.yml")
     @ExpectedDataSet(value = "datasets/expected/find-by-id.yml")
     void ID検索で見つからない場合() {
