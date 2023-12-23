@@ -3,7 +3,8 @@ package org.contourgara.examination1.presentation;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
@@ -65,7 +66,7 @@ class EmployeesControllerTest {
         .body("employees[1].id", equalTo("2"))
         .body("employees[1].firstName", equalTo("Jiro"))
         .body("employees[1].lastName", equalTo("Yamada"));
-    }
+  }
 
   @Nested
   class ID検索 {
@@ -93,6 +94,16 @@ class EmployeesControllerTest {
           .body("id", equalTo("2"))
           .body("firstName", equalTo("Jiro"))
           .body("lastName", equalTo("Yamada"));
+    }
+
+    @Test
+    void 存在しないIDで検索した場合() {
+      // execute & assert
+      given()
+          .when()
+          .get("/v1/employees/0")
+          .then()
+          .status(BAD_REQUEST);
     }
   }
 }
