@@ -1,5 +1,7 @@
 package org.contourgara.examination1.infrastructure.repository;
 
+import static java.util.Objects.isNull;
+
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,8 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
    */
   @Override
   public Optional<Employee> findById(String id) {
+    if (isNull(mapper.findById(id))) return Optional.empty();
+
     return Optional.of(mapper.findById(id).convertToModel());
   }
 }
