@@ -13,6 +13,7 @@ class EmployeeIdTest {
     1000000000
     """)
   void idが無効な数字の場合例外が飛ぶ(String value) {
+    // execute & assert
     assertThatCode(() -> new EmployeeId(value))
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("従業員 ID は 1 以上 999999999 以下です。");
