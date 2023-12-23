@@ -8,6 +8,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
+import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,9 @@ class EmployeesControllerTest {
 
   @MockBean
   FindAllEmployeesUseCase findAllEmployeesUseCase;
+
+  @MockBean
+  FindEmployeeByIdUseCase findEmployeeByIdUseCase;
 
   @BeforeEach
   void setUp() {

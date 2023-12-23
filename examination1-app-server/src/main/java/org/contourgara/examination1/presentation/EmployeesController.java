@@ -4,11 +4,9 @@ import static org.springframework.http.HttpStatus.OK;
 
 import lombok.RequiredArgsConstructor;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
-import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
+import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
 import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
 import org.contourgara.examination1.presentation.response.EmployeeResponse;
-import org.contourgara.examination1.presentation.response.ErrorResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class EmployeesController {
   private final FindAllEmployeesUseCase findAllEmployeesUseCase;
+  private final FindEmployeeByIdUseCase findEmployeeByIdUseCase;
 
   /**
    * root URL にアクセスされた場合、ステータスコード 200 を返します。
@@ -53,8 +52,6 @@ public class EmployeesController {
   @GetMapping("v1/employees/{id}")
   @ResponseStatus(OK)
   public EmployeeResponse findEmployeeById(@PathVariable("id") String id) {
-    if (id.equals("1")) return new EmployeeResponse("1", "Taro", "Yamada");
-    if (id.equals("2")) return new EmployeeResponse("2", "Jiro", "Yamada");
-    throw new NotFoundEmployeeException(id);
+    return EmployeeResponse.of(findEmployeeByIdUseCase.execute(id));
   }
 }
