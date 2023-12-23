@@ -65,4 +65,14 @@ class EmployeesControllerTest {
         .body("employees[1].firstName", equalTo("Jiro"))
         .body("employees[1].lastName", equalTo("Yamada"));
     }
+
+  @Test
+  void ID指定で従業員が取得できる() {
+    // execute & assert
+    given()
+        .when()
+        .get("/v1/employees/1")
+        .then()
+        .status(OK);
+  }
 }
