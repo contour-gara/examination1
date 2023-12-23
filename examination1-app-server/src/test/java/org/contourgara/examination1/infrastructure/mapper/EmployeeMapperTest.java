@@ -33,8 +33,8 @@ class EmployeeMapperTest {
   @Nested
   class 全件取得 {
     @Test
-    @DataSet(value = "datasets/setup/find-all.yml")
-    @ExpectedDataSet(value = "datasets/expected/find-all.yml")
+    @DataSet(value = "datasets/setup/2-employee.yml")
+    @ExpectedDataSet(value = "datasets/expected/2-employee.yml")
     void 全件取得できる() {
       // execute
       List<EmployeeEntity> actual = sut.findAll();
@@ -65,8 +65,8 @@ class EmployeeMapperTest {
   @Nested
   class ID検索 {
     @Test
-    @DataSet(value = "datasets/setup/find-by-id.yml")
-    @ExpectedDataSet(value = "datasets/expected/find-by-id.yml")
+    @DataSet(value = "datasets/setup/1-employee.yml")
+    @ExpectedDataSet(value = "datasets/expected/1-employee.yml")
     void ID検索できる() {
       // execute
       EmployeeEntity actual = sut.findById("1");
@@ -78,8 +78,8 @@ class EmployeeMapperTest {
     }
 
     @Test
-    @DataSet(value = "datasets/setup/find-all.yml")
-    @ExpectedDataSet(value = "datasets/expected/find-all.yml")
+    @DataSet(value = "datasets/setup/2-employee.yml")
+    @ExpectedDataSet(value = "datasets/expected/2-employee.yml")
     void テーブルにデータが複数あってもID検索できる() {
       // execute
       EmployeeEntity actual = sut.findById("1");
@@ -91,8 +91,8 @@ class EmployeeMapperTest {
     }
 
     @Test
-    @DataSet(value = "datasets/setup/find-by-id.yml")
-    @ExpectedDataSet(value = "datasets/expected/find-by-id.yml")
+    @DataSet(value = "datasets/setup/1-employee.yml")
+    @ExpectedDataSet(value = "datasets/expected/1-employee.yml")
     void ID検索で見つからない場合() {
       // execute
       EmployeeEntity actual = sut.findById("0");
