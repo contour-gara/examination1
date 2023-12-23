@@ -66,4 +66,23 @@ class EmployeeRepositoryImplTest {
       assertThat(actual).isEqualTo(expected);
     }
   }
+
+  @Nested
+  class ID検索 {
+    @Test
+    void ID検索できる() {
+      // setup
+      doReturn(new EmployeeEntity("1", "Taro", "Yamada"))
+          .when(mapper)
+          .findById("1");
+
+      // execute
+      Employee actual = sut.findById("1");
+
+      // assert
+      Employee expected = new Employee(new EmployeeId("1"), "Taro", "Yamada");
+
+      assertThat(actual).isEqualTo(expected);
+    }
+  }
 }
