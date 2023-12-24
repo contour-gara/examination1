@@ -49,7 +49,7 @@ class EmployeeMapperTest {
     }
 
     @Test
-    @DataSet(cleanBefore = true)
+    @DataSet(value = "datasets/setup/empty-table.yml")
     @ExpectedDataSet(value = "datasets/expected/empty-table.yml")
     void データがない場合() {
       // execute
@@ -103,16 +103,35 @@ class EmployeeMapperTest {
   }
 
   @Nested
-  class 新規登録 {
+  class シーケンス {
     @Test
-    @DataSet(cleanBefore = true)
+    @DataSet(
+        value = "datasets/setup/empty-table.yml",
+        executeScriptsBefore = "datasets/setup/set-sequence-from-1.sql"
+    )
     @ExpectedDataSet(value = "datasets/expected/empty-table.yml")
-    void 次の従業員IDが取得できる() {
+    void テーブルが空の場合() {
       // execute
       Long actual = sut.getNextSequence();
 
       // assert
       Long expected = 1L;
+
+      assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DataSet(
+        value = "datasets/setup/1-employee.yml",
+        executeScriptsBefore = "datasets/setup/set-sequence-from-2.sql"
+    )
+    @ExpectedDataSet(value = "datasets/expected/1-employee.yml")
+    void テーブルに1件登録されている場合() {
+      // execute
+      Long actual = sut.getNextSequence();
+
+      // assert
+      Long expected = 2L;
 
       assertThat(actual).isEqualTo(expected);
     }
