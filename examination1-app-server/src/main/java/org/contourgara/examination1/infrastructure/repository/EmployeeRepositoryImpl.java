@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.contourgara.examination1.domain.model.Employee;
+import org.contourgara.examination1.domain.model.EmployeeId;
 import org.contourgara.examination1.domain.repository.EmployeeRepository;
 import org.contourgara.examination1.infrastructure.entity.EmployeeEntity;
 import org.contourgara.examination1.infrastructure.mapper.EmployeeMapper;
@@ -35,5 +36,13 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     if (isNull(mapper.findById(id))) return Optional.empty();
 
     return Optional.of(mapper.findById(id).convertToModel());
+  }
+
+  /**
+   * {inheritDoc}
+   */
+  @Override
+  public Employee create(Employee employee) {
+    return new Employee(new EmployeeId("3"), employee.firstName(), employee.lastName());
   }
 }

@@ -22,4 +22,12 @@ public interface EmployeeRepository {
    * @return Employee の Optional。従業員が見つからなかった場合は空の Optional が返ります。
    */
   Optional<Employee> findById(String id);
+
+  /**
+   * 従業員の新規登録を行います。
+   *
+   * @param employee 作成する従業員。従業員 ID は EmployeeID.createEmptyId() で作成してください。
+   * @return 作成された Employee。
+   */
+  Employee create(Employee employee);
 }
