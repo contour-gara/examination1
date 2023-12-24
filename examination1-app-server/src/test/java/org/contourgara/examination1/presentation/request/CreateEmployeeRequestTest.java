@@ -1,9 +1,9 @@
 package org.contourgara.examination1.presentation.request;
 
+import static org.assertj.core.api.Assertions.*;
+
 import org.contourgara.examination1.application.param.CreateEmployeeParam;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
 
 class CreateEmployeeRequestTest {
   @Test
