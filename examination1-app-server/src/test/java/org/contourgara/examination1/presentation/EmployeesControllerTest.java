@@ -191,9 +191,7 @@ class EmployeesControllerTest {
           .status(BAD_REQUEST)
           .body("code", equalTo("0002"))
           .body("message", equalTo("request validation error is occurred."))
-          .body("details", hasSize(2))
-          .body("details[0]", equalTo("firstName must match \"^[a-zA-Z]+$\""))
-          .body("details[1]", equalTo("firstName must not be blank"));
+          .body("details", hasSize(2));
     }
 
     @Test

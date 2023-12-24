@@ -41,11 +41,11 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(BAD_REQUEST)
   public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-    List<String> details = new ArrayList<>();
-
-    for (FieldError error : e.getFieldErrors()) {
-      details.add(String.format("%s %s", error.getField(), error.getDefaultMessage()));
-    }
+    List<String> details = e.getFieldErrors().stream()
+        .peek(error -> log.warn("入力エラーが発生しました。[{} = {}]", error.getField(), error.getRejectedValue()))
+        .map(error -> String.format("%s %s", error.getField(), error.getDefaultMessage()))
+        .peek(error -> log.warn("入力エラーの内容。[{}]", error))
+        .toList();
 
     return new ErrorResponse(
         "0002",
