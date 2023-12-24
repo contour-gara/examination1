@@ -6,9 +6,14 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import lombok.extern.slf4j.Slf4j;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
 import org.contourgara.examination1.presentation.response.ErrorResponse;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * GlobalExceptionHandler は例外を検知し適切なエラーレスポンスを返すクラスです。
@@ -31,7 +36,23 @@ public class GlobalExceptionHandler {
         String.format("specified employee [id = %s] is not found.", e.getId()),
         emptyList()
     );
-
-    // TODO: 汎用的なハンドラーを作る
   }
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ResponseStatus(BAD_REQUEST)
+  public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    List<String> details = new ArrayList<>();
+
+    for (FieldError error : e.getFieldErrors()) {
+      details.add(String.format("%s %s", error.getField(), error.getDefaultMessage()));
+    }
+
+    return new ErrorResponse(
+        "0002",
+        "request validation error is occurred.",
+        details
+    );
+  }
+
+  // TODO: 汎用的なハンドラーを作る
 }
