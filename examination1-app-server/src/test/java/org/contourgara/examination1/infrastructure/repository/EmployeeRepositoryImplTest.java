@@ -110,6 +110,10 @@ class EmployeeRepositoryImplTest {
     @Test
     void 新規登録できる() {
       // setup
+      doReturn(3L)
+          .when(mapper)
+          .getNextSequence();
+
       // execute
       Employee actual = sut.create(new Employee(EmployeeId.createEmptyId(), "Hanako", "Shirato"));
 

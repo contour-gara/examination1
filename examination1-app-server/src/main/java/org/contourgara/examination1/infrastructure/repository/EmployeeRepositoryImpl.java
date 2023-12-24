@@ -33,16 +33,25 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
    */
   @Override
   public Optional<Employee> findById(String id) {
-    if (isNull(mapper.findById(id))) return Optional.empty();
-
-    return Optional.of(mapper.findById(id).convertToModel());
+    return Optional.ofNullable(mapper.findById(id)).map(EmployeeEntity::convertToModel);
   }
 
   /**
-   * {inheritDoc}
+   * {@inheritDoc}
    */
   @Override
-  public Employee create(Employee employee) {
-    return new Employee(new EmployeeId("3"), employee.firstName(), employee.lastName());
+  public Employee create(Employee idEmptyEmployee) {
+    Employee employee = new Employee(
+        new EmployeeId(mapper.getNextSequence().toString()),
+        idEmptyEmployee.firstName(),
+        idEmptyEmployee.lastName()
+    );
+
+    mapper.create(new EmployeeEntity(
+        employee.employeeId().getValue(),
+        employee.firstName(),
+        employee.lastName()));
+
+    return employee;
   }
 }
