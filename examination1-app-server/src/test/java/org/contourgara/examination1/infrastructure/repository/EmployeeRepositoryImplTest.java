@@ -104,4 +104,19 @@ class EmployeeRepositoryImplTest {
       assertThat(actual).isEqualTo(expected);
     }
   }
+
+  @Nested
+  class 新規登録 {
+    @Test
+    void 新規登録できる() {
+      // setup
+      // execute
+      Employee actual = sut.create(new Employee(EmployeeId.createEmptyId(), "Hanako", "Shirato"));
+
+      // assert
+      Employee expected = new Employee(new EmployeeId("3"), "Hanako", "Shirato");
+
+      assertThat(actual).isEqualTo(expected);
+    }
+  }
 }
