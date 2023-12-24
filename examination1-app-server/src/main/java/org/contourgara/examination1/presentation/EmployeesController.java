@@ -80,6 +80,6 @@ public class EmployeesController {
         .build()
         .toUri();
 
-    return ResponseEntity.of(ProblemDetail.forStatus(CREATED)).location(uri).build();
+    return ResponseEntity.created(uri).build();
   }
 }
