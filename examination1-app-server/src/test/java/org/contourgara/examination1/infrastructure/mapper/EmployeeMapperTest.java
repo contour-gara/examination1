@@ -143,5 +143,8 @@ class EmployeeMapperTest {
   void 新規登録ができる() {
     // execute
     sut.create(new EmployeeEntity("1", "Taro", "Yamada"));
+
+    // assert
+    assertThat(sut).isNotNull();
   }
 }
