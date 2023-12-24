@@ -1,7 +1,6 @@
 package org.contourgara.examination1.infrastructure.mapper;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -30,10 +29,23 @@ public interface EmployeeMapper {
   @Select("SELECT id, first_name, last_name FROM employees WHERE id = #{id}")
   EmployeeEntity findById(String id);
 
+  /**
+   * 次のシーケンスを取得し、シーケンスを更新します。
+   *
+   * @return 次のシーケンス。
+   */
   @Select("SELECT nextval('EMPLOYEE_ID_SEQ')")
   @Options(flushCache = Options.FlushCachePolicy.TRUE)
   Long getNextSequence();
 
-  @Insert("INSERT INTO employees (id, first_name, last_name) VALUES (#{id}, #{firstName}, #{lastName})")
+  /**
+   * 従業員を新規登録します。
+   * 次のシーケンスを取得してから使用してください。
+   *
+   * @param entity 登録する従業員。従業員 ID は次のシーケンスの値を使用してください。
+   */
+  @Insert(
+      "INSERT INTO employees (id, first_name, last_name) VALUES (#{id}, #{firstName}, #{lastName})"
+  )
   void create(EmployeeEntity entity);
 }

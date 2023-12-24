@@ -26,8 +26,8 @@ public interface EmployeeRepository {
   /**
    * 従業員の新規登録を行います。
    *
-   * @param employee 作成する従業員。従業員 ID は EmployeeID.createEmptyId() で作成してください。
-   * @return 作成された Employee。
+   * @param employee 新規登録する従業員。従業員 ID は EmployeeID.createEmptyId() で作成できます。
+   * @return 登録された Employee。
    */
   Employee create(Employee employee);
 }

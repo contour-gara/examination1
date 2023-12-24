@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class GlobalExceptionHandler {
   /**
-   * ID 検索した際に従業員が見つからない場合に、このメソッドが実行されます。
+   * ID 検索した際に従業員が見つからない場合にこのメソッドが実行されます。
+   * レスポンスステータスは BAD_REQUEST です。
    *
    * @param e 従業員が見つからなかった時の例外。
-   * @return ErrorResponse。コードは 0003 で、見つからなかった従業員 ID が含まれます。
+   * @return ErrorResponse。レスポンスボディになります。code は 0003 で、message には見つからなかった従業員 ID が含まれます。
    */
   @ExceptionHandler(NotFoundEmployeeException.class)
   @ResponseStatus(BAD_REQUEST)
@@ -35,12 +36,25 @@ public class GlobalExceptionHandler {
     );
   }
 
+  /**
+   * リクエストに入力違反があった場合にこのメソッドが実行されます。
+   * レスポンスステータスは BAD_REQUEST です。
+   *
+   * @param e リクエストに入力違反があった時の例外。
+   * @return ErrorResponse。レスポンスボディになります。code は 0002 で、details には入力違反の内容が含まれます。
+   */
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(BAD_REQUEST)
   public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
     List<String> details = e.getFieldErrors().stream()
         .map(error -> {
-          log.warn("入力エラーが発生しました。[{} = {}: {}]", error.getField(), error.getRejectedValue(), error.getDefaultMessage());
+          log.warn(
+              "入力エラーが発生しました。[{} = {}: {}]",
+              error.getField(),
+              error.getRejectedValue(),
+              error.getDefaultMessage()
+          );
+
           return String.format("%s %s", error.getField(), error.getDefaultMessage());
         })
         .toList();

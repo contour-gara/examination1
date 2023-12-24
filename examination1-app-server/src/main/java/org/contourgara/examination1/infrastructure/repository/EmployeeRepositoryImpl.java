@@ -47,10 +47,13 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         idEmptyEmployee.lastName()
     );
 
-    mapper.create(new EmployeeEntity(
-        employee.employeeId().getValue(),
-        employee.firstName(),
-        employee.lastName()));
+    mapper.create(
+        new EmployeeEntity(
+            employee.employeeId().getValue(),
+            employee.firstName(),
+            employee.lastName()
+        )
+    );
 
     return employee;
   }

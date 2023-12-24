@@ -1,8 +1,9 @@
 package org.contourgara.examination1.presentation;
 
-import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.contourgara.examination1.application.CreateEmployeeUseCase;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
@@ -11,7 +12,6 @@ import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;
 import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
 import org.contourgara.examination1.presentation.response.EmployeeResponse;
-import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
 
 /**
  * 従業員情報のエンドポイントです。
@@ -69,9 +67,17 @@ public class EmployeesController {
     return EmployeeResponse.of(findEmployeeByIdUseCase.execute(id));
   }
 
+  /**
+   * 従業員を新規登録します。
+   *
+   * @param request 新規登録する従業員。
+   * @return ResponseEntity。ヘッダーの Location に登録した従業員情報にアクセスする URL が含まれます。
+   */
   @PostMapping("v1/employees")
   @ResponseStatus(CREATED)
-  public ResponseEntity<Void> createEmployee(@RequestBody @Validated CreateEmployeeRequest request) {
+  public ResponseEntity<Void> createEmployee(
+      @RequestBody @Validated CreateEmployeeRequest request
+  ) {
     Employee employee = createEmployeeUseCase.execute(request.convertToParam());
 
     URI uri = UriComponentsBuilder
