@@ -139,6 +139,12 @@ class EmployeesControllerTest {
     void 新規登録ができる() {
       // execute & assert
       given()
+          .body("""
+              {
+              "firstName" : "Hanako",
+              "lastName" : "Shirato"
+              }
+              """)
           .when()
           .post("/v1/employees")
           .then()
