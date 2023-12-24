@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import lombok.RequiredArgsConstructor;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
+import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;
 import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
 import org.contourgara.examination1.presentation.response.EmployeeResponse;
 import org.springframework.http.ProblemDetail;
@@ -65,7 +66,7 @@ public class EmployeesController {
 
   @PostMapping("v1/employees")
   @ResponseStatus(CREATED)
-  public ResponseEntity<Void> createEmployee() {
+  public ResponseEntity<Void> createEmployee(CreateEmployeeRequest request) {
     String url = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
 
     URI uri = UriComponentsBuilder.fromUriString(url).path("/" + 3).build().toUri();
