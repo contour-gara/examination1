@@ -139,7 +139,7 @@ class EmployeeMapperTest {
 
   @Test
   @DataSet(value = "datasets/setup/empty-table.yml")
-  @ExpectedDataSet(value = "datasets/expected/1-employee.yml")
+  @ExpectedDataSet(value = "datasets/expected/2-employee.yml")
   void 新規登録ができる() {
     // execute
     sut.create(new EmployeeEntity("1", "Taro", "Yamada"));

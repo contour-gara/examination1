@@ -1,6 +1,8 @@
 package org.contourgara.examination1.infrastructure.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
@@ -31,4 +33,7 @@ public interface EmployeeMapper {
   @Select("SELECT nextval('EMPLOYEE_ID_SEQ')")
   @Options(flushCache = Options.FlushCachePolicy.TRUE)
   Long getNextSequence();
+
+  @Insert("INSERT INTO employees (id, first_name, last_name) VALUES (#{id}, #{firstName}, #{lastName})")
+  void create(EmployeeEntity entity);
 }
