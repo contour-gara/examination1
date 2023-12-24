@@ -4,8 +4,10 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import lombok.RequiredArgsConstructor;
+import org.contourgara.examination1.application.CreateEmployeeUseCase;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
+import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;
 import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
 import org.contourgara.examination1.presentation.response.EmployeeResponse;
@@ -31,6 +33,7 @@ import java.net.URI;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class EmployeesController {
+  private final CreateEmployeeUseCase createEmployeeUseCase;
   private final FindAllEmployeesUseCase findAllEmployeesUseCase;
   private final FindEmployeeByIdUseCase findEmployeeByIdUseCase;
 
@@ -69,9 +72,13 @@ public class EmployeesController {
   @PostMapping("v1/employees")
   @ResponseStatus(CREATED)
   public ResponseEntity<Void> createEmployee(@RequestBody @Validated CreateEmployeeRequest request) {
-    String url = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
+    Employee employee = createEmployeeUseCase.execute(request.convertToParam());
 
-    URI uri = UriComponentsBuilder.fromUriString(url).path("/" + 3).build().toUri();
+    URI uri = UriComponentsBuilder
+        .fromUriString(ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString())
+        .path("/" + employee.employeeId().getValue())
+        .build()
+        .toUri();
 
     return ResponseEntity.of(ProblemDetail.forStatus(CREATED)).location(uri).build();
   }

@@ -10,9 +10,11 @@ import static org.springframework.http.HttpStatus.OK;
 
 import java.util.List;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
+import org.contourgara.examination1.application.CreateEmployeeUseCase;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
+import org.contourgara.examination1.application.param.CreateEmployeeParam;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
 import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;
@@ -29,6 +31,9 @@ import org.springframework.test.web.servlet.MockMvc;
 class EmployeesControllerTest {
   @Autowired
   MockMvc mockMvc;
+
+  @MockBean
+  CreateEmployeeUseCase createEmployeeUseCase;
 
   @MockBean
   FindAllEmployeesUseCase findAllEmployeesUseCase;
@@ -135,6 +140,11 @@ class EmployeesControllerTest {
 
   @Test
   void 新規登録ができる() {
+    // setup
+    doReturn(new Employee(new EmployeeId("3"), "Hanako", "Shirato"))
+        .when(createEmployeeUseCase)
+        .execute(new CreateEmployeeParam("Hanako", "Shirato"));
+
     // execute & assert
     given()
         .contentType(MediaType.APPLICATION_JSON_VALUE)
