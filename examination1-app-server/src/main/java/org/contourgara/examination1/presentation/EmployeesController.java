@@ -8,12 +8,18 @@ import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
 import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
 import org.contourgara.examination1.presentation.response.EmployeeResponse;
+import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 /**
  * 従業員情報のエンドポイントです。
@@ -59,5 +65,11 @@ public class EmployeesController {
 
   @PostMapping("v1/employees")
   @ResponseStatus(CREATED)
-  public void createEmployee() {}
+  public ResponseEntity<Void> createEmployee() {
+    String url = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
+
+    URI uri = UriComponentsBuilder.fromUriString(url).path("/" + 3).build().toUri();
+
+    return ResponseEntity.of(ProblemDetail.forStatus(CREATED)).location(uri).build();
+  }
 }
