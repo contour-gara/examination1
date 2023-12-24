@@ -3,8 +3,9 @@ package org.contourgara.examination1.presentation;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
@@ -127,6 +128,19 @@ class EmployeesControllerTest {
           .body("code", equalTo("0003"))
           .body("message", equalTo("specified employee [id = 0] is not found."))
           .body("details", hasSize(0));
+    }
+  }
+
+  @Nested
+  class 新規登録 {
+    @Test
+    void 新規登録ができる() {
+      // execute & assert
+      given()
+          .when()
+          .post("/v1/employees")
+          .then()
+          .status(CREATED);
     }
   }
 }
