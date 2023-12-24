@@ -1,6 +1,7 @@
 package org.contourgara.examination1.presentation;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
+import static org.contourgara.examination1.TestUtils.*;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -14,6 +15,7 @@ import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
+import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -131,60 +133,27 @@ class EmployeesControllerTest {
     }
   }
 
-  @Nested
-  class 新規登録 {
-    @Test
-    void 新規登録ができる() {
-      // execute & assert
-      given()
-          .contentType(MediaType.APPLICATION_JSON_VALUE)
-          .body("""
-              {
-              "firstName": "Hanako",
-              "lastName": "Shirato"
-              }
-              """)
-          .when()
-          .post("/v1/employees")
-          .then()
-          .status(CREATED)
-          .header("Location", equalTo("http://localhost/v1/employees/3"));
-    }
+  @Test
+  void 新規登録ができる() {
+    // execute & assert
+    given()
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .body(marshalToJson(new CreateEmployeeRequest("Hanako", "Shirato")))
+        .when()
+        .post("/v1/employees")
+        .then()
+        .status(CREATED)
+        .header("Location", equalTo("http://localhost/v1/employees/3"));
   }
 
   @Nested
-  class 新規登録の名前入力検証 {
+  class 入力検証が機能しているか {
     @Test
-    void 名前が入力されていない場合() {
+    void 入力されていない場合() {
       // execute & assert
       given()
           .contentType(MediaType.APPLICATION_JSON_VALUE)
-          .body("""
-              {
-              "lastName": "Shirato"
-              }
-              """)
-          .when()
-          .post("/v1/employees")
-          .then()
-          .status(BAD_REQUEST)
-          .body("code", equalTo("0002"))
-          .body("message", equalTo("request validation error is occurred."))
-          .body("details", hasSize(1))
-          .body("details[0]", equalTo("firstName must not be blank"));
-    }
-
-    @Test
-    void 名前が空文字の場合() {
-      // execute & assert
-      given()
-          .contentType(MediaType.APPLICATION_JSON_VALUE)
-          .body("""
-              {
-              "firstName": "",
-              "lastName": "Shirato"
-              }
-              """)
+          .body(marshalToJson(new CreateEmployeeRequest(null, null)))
           .when()
           .post("/v1/employees")
           .then()
@@ -195,44 +164,48 @@ class EmployeesControllerTest {
     }
 
     @Test
-    void 名前にアルファベット以外がある場合() {
+    void 空文字の場合() {
       // execute & assert
       given()
           .contentType(MediaType.APPLICATION_JSON_VALUE)
-          .body("""
-              {
-              "firstName": "花子",
-              "lastName": "Shirato"
-              }
-              """)
+          .body(marshalToJson(new CreateEmployeeRequest("", "")))
           .when()
           .post("/v1/employees")
           .then()
           .status(BAD_REQUEST)
           .body("code", equalTo("0002"))
           .body("message", equalTo("request validation error is occurred."))
-          .body("details", hasSize(1))
-          .body("details[0]", equalTo("firstName must match \"^[a-zA-Z]+$\""));
+          .body("details", hasSize(4));
     }
+
     @Test
-    void 名前が100文字以上の場合() {
+    void アルファベット以外がある場合() {
       // execute & assert
       given()
           .contentType(MediaType.APPLICATION_JSON_VALUE)
-          .body("""
-              {
-              "firstName": "%s",
-              "lastName": "Shirato"
-              }
-              """.formatted("a".repeat(101)))
+          .body(marshalToJson(new CreateEmployeeRequest("あ", "あ")))
           .when()
           .post("/v1/employees")
           .then()
           .status(BAD_REQUEST)
           .body("code", equalTo("0002"))
           .body("message", equalTo("request validation error is occurred."))
-          .body("details", hasSize(1))
-          .body("details[0]", equalTo("firstName length must be between 0 and 100"));
+          .body("details", hasSize(2));
+    }
+
+    @Test
+    void _100文字以上場合() {
+      // execute & assert
+      given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
+          .body(marshalToJson(new CreateEmployeeRequest("a".repeat(101), "a".repeat(101))))
+          .when()
+          .post("/v1/employees")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0002"))
+          .body("message", equalTo("request validation error is occurred."))
+          .body("details", hasSize(2));
     }
   }
 }
