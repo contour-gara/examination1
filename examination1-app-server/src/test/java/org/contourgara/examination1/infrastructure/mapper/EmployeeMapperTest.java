@@ -101,4 +101,20 @@ class EmployeeMapperTest {
       assertThat(actual).isNull();
     }
   }
+
+  @Nested
+  @DataSet(cleanBefore = true)
+  @ExpectedDataSet(value = "datasets/expected/empty-table.yml")
+  class 新規登録 {
+    @Test
+    void 次の従業員IDが取得できる() {
+      // execute
+      Long actual = sut.getNextSequence();
+
+      // assert
+      Long expected = 1L;
+
+      assertThat(actual).isEqualTo(expected);
+    }
+  }
 }
