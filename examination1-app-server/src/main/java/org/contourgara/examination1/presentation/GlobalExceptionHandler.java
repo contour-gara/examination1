@@ -3,17 +3,14 @@ package org.contourgara.examination1.presentation;
 import static java.util.Collections.emptyList;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
 import org.contourgara.examination1.presentation.response.ErrorResponse;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * GlobalExceptionHandler は例外を検知し適切なエラーレスポンスを返すクラスです。
@@ -42,9 +39,10 @@ public class GlobalExceptionHandler {
   @ResponseStatus(BAD_REQUEST)
   public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
     List<String> details = e.getFieldErrors().stream()
-        .peek(error -> log.warn("入力エラーが発生しました。[{} = {}]", error.getField(), error.getRejectedValue()))
-        .map(error -> String.format("%s %s", error.getField(), error.getDefaultMessage()))
-        .peek(error -> log.warn("入力エラーの内容。[{}]", error))
+        .map(error -> {
+          log.warn("入力エラーが発生しました。[{} = {}: {}]", error.getField(), error.getRejectedValue(), error.getDefaultMessage());
+          return String.format("%s %s", error.getField(), error.getDefaultMessage());
+        })
         .toList();
 
     return new ErrorResponse(
