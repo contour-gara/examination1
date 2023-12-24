@@ -31,5 +31,7 @@ public class GlobalExceptionHandler {
         String.format("specified employee [id = %s] is not found.", e.getId()),
         emptyList()
     );
+
+    // TODO: 汎用的なハンドラーを作る
   }
 }
