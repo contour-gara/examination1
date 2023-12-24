@@ -11,9 +11,11 @@ import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
 import org.contourgara.examination1.presentation.response.EmployeeResponse;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,7 +68,7 @@ public class EmployeesController {
 
   @PostMapping("v1/employees")
   @ResponseStatus(CREATED)
-  public ResponseEntity<Void> createEmployee(CreateEmployeeRequest request) {
+  public ResponseEntity<Void> createEmployee(@RequestBody @Validated CreateEmployeeRequest request) {
     String url = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
 
     URI uri = UriComponentsBuilder.fromUriString(url).path("/" + 3).build().toUri();

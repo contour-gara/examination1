@@ -7,7 +7,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
-import io.restassured.http.Header;
+import java.util.List;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
@@ -22,8 +22,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
 
 @WebMvcTest
 class EmployeesControllerTest {
@@ -139,10 +137,11 @@ class EmployeesControllerTest {
     void 新規登録ができる() {
       // execute & assert
       given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
           .body("""
               {
-              "firstName" : "Hanako",
-              "lastName" : "Shirato"
+              "firstName": "Hanako",
+              "lastName": "Shirato"
               }
               """)
           .when()
@@ -150,6 +149,91 @@ class EmployeesControllerTest {
           .then()
           .status(CREATED)
           .header("Location", equalTo("http://localhost/v1/employees/3"));
+    }
+  }
+
+  @Nested
+  class 新規登録の名前入力検証 {
+    @Test
+    void 名前が入力されていない場合() {
+      // execute & assert
+      given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
+          .body("""
+              {
+              "lastName": "Shirato"
+              }
+              """)
+          .when()
+          .post("/v1/employees")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0002"))
+          .body("message", equalTo("request validation error is occurred."))
+          .body("details", hasSize(1))
+          .body("details[0]", equalTo("firstName must not be blank"));
+    }
+
+    @Test
+    void 名前が空文字の場合() {
+      // execute & assert
+      given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
+          .body("""
+              {
+              "firstName": "",
+              "lastName": "Shirato"
+              }
+              """)
+          .when()
+          .post("/v1/employees")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0002"))
+          .body("message", equalTo("request validation error is occurred."))
+          .body("details", hasSize(1))
+          .body("details[0]", equalTo("firstName must not be blank"));
+    }
+
+    @Test
+    void 名前にアルファベット以外がある場合() {
+      // execute & assert
+      given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
+          .body("""
+              {
+              "firstName": "花子",
+              "lastName": "Shirato"
+              }
+              """)
+          .when()
+          .post("/v1/employees")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0002"))
+          .body("message", equalTo("request validation error is occurred."))
+          .body("details", hasSize(1))
+          .body("details[0]", equalTo("firstName must match \"^[a-zA-Z]+$\""));
+    }
+    @Test
+    void 名前が100文字以上の場合() {
+      // execute & assert
+      given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
+          .body("""
+              {
+              "firstName": "%s",
+              "lastName": "Shirato"
+              }
+              """.formatted("a".repeat(101)))
+          .when()
+          .post("/v1/employees")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0002"))
+          .body("message", equalTo("request validation error is occurred."))
+          .body("details", hasSize(1))
+          .body("details[0]", equalTo("firstName length must be between 0 and 100"));
     }
   }
 }
