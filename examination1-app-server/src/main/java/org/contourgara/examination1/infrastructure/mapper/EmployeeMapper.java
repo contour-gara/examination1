@@ -2,6 +2,7 @@ package org.contourgara.examination1.infrastructure.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.contourgara.examination1.infrastructure.entity.EmployeeEntity;
 
@@ -26,4 +27,8 @@ public interface EmployeeMapper {
    */
   @Select("SELECT id, first_name, last_name FROM employees WHERE id = #{id}")
   EmployeeEntity findById(String id);
+
+  @Select("SELECT nextval('EMPLOYEE_ID_SEQ')")
+  @Options(flushCache = Options.FlushCachePolicy.TRUE)
+  Long getNextSequence();
 }

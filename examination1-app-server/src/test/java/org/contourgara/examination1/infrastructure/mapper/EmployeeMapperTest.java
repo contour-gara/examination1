@@ -103,10 +103,10 @@ class EmployeeMapperTest {
   }
 
   @Nested
-  @DataSet(cleanBefore = true)
-  @ExpectedDataSet(value = "datasets/expected/empty-table.yml")
   class 新規登録 {
     @Test
+    @DataSet(cleanBefore = true)
+    @ExpectedDataSet(value = "datasets/expected/empty-table.yml")
     void 次の従業員IDが取得できる() {
       // execute
       Long actual = sut.getNextSequence();
