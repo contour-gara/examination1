@@ -13,10 +13,10 @@ class CreateEmployeeParamTest {
     CreateEmployeeParam sut = new CreateEmployeeParam("Hanako", "Shirato");
 
     // execute
-    Employee actual = sut.convertToModel("3");
+    Employee actual = sut.convertToModel();
 
     // assert
-    Employee expected = new Employee(new EmployeeId("3"), "Hanako", "Shirato");
+    Employee expected = new Employee(EmployeeId.createEmptyId(), "Hanako", "Shirato");
 
     assertThat(actual).isEqualTo(expected);
   }
