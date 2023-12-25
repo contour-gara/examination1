@@ -109,16 +109,27 @@ class EmployeeRepositoryImplTest {
   class 新規登録 {
     @Test
     void 新規登録できる() {
+      // execute
+      Employee actual = sut.create(new Employee(new EmployeeId("3"), "Hanako", "Shirato"));
+
+      // assert
+      Employee expected = new Employee(new EmployeeId("3"), "Hanako", "Shirato");
+
+      assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void 次のシーケンスを取得できる() {
       // setup
       doReturn(3L)
           .when(mapper)
           .getNextSequence();
 
       // execute
-      Employee actual = sut.create(new Employee(EmployeeId.createEmptyId(), "Hanako", "Shirato"));
+      Long actual = sut.getNextSequence();
 
       // assert
-      Employee expected = new Employee(new EmployeeId("3"), "Hanako", "Shirato");
+      Long expected = 3L;
 
       assertThat(actual).isEqualTo(expected);
     }
