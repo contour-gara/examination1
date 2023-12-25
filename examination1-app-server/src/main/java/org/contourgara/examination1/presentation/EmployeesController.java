@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
+// TODO: API 仕様としてリクエストパラメータの必須、任意や入力検証内容を javadoc に書く。
+
 /**
  * 従業員情報のエンドポイントです。
  */
