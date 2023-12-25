@@ -42,7 +42,7 @@ public class EmployeeId {
    *
    * @return ID が空文字の EmployeeId。
    */
-  public static EmployeeId createEmptyId() {
-    return new EmployeeId();
+  public static EmployeeId of(Long id) {
+    return new EmployeeId(id.toString());
   }
 }

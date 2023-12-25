@@ -15,7 +15,7 @@ public record CreateEmployeeParam(String firstName, String lastName) {
    *
    * @return Employee。従業員 ID は空文字です。
    */
-  public Employee convertToModel() {
-    return new Employee(EmployeeId.createEmptyId(), firstName, lastName);
+  public Employee convertToModel(Long id) {
+    return new Employee(EmployeeId.of(id), firstName, lastName);
   }
 }

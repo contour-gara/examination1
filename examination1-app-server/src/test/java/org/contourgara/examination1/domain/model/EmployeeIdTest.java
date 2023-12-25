@@ -46,14 +46,16 @@ class EmployeeIdTest {
   }
 
   @Test
-  void idが空文字のオブジェクトを生成できる() {
+  void Long型からオブジェクトを生成できる() {
     // setup
-    EmployeeId sut = EmployeeId.createEmptyId();
+    EmployeeId sut = EmployeeId.of(3L);
 
     // execute
     String actual = sut.getValue();
 
     // expected
-    assertThat(actual).isEmpty();
+    String expected = "3";
+
+    assertThat(actual).isEqualTo(expected);
   }
 }
