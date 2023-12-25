@@ -23,6 +23,8 @@ public interface EmployeeRepository {
    */
   Optional<Employee> findById(String id);
 
+  Long getNextSequence();
+
   /**
    * 従業員の新規登録を行います。
    *

@@ -36,17 +36,16 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     return Optional.ofNullable(mapper.findById(id)).map(EmployeeEntity::convertToModel);
   }
 
+  @Override
+  public Long getNextSequence() {
+    return 3L;
+  }
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public Employee create(Employee idEmptyEmployee) {
-    Employee employee = new Employee(
-        new EmployeeId(mapper.getNextSequence().toString()),
-        idEmptyEmployee.firstName(),
-        idEmptyEmployee.lastName()
-    );
-
+  public Employee create(Employee employee) {
     mapper.create(
         new EmployeeEntity(
             employee.employeeId().getValue(),
