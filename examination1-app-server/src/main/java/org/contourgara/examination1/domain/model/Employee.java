@@ -2,6 +2,8 @@ package org.contourgara.examination1.domain.model;
 
 import static java.util.Objects.isNull;
 
+// TODO: ガード条件見直し
+
 /**
  * Employee クラスは従業員を表すモデルです。
  *
