@@ -30,9 +30,13 @@ class CreateEmployeeUseCaseTest {
     // setup
     CreateEmployeeParam createEmployeeParam = new CreateEmployeeParam("Hanako", "Shirato");
 
+    doReturn(3L)
+        .when(repository)
+        .getNextSequence();
+
     doReturn(new Employee(new EmployeeId("3"), "Hanako", "Shirato"))
         .when(repository)
-        .create(createEmployeeParam.convertToModel());
+        .create(createEmployeeParam.convertToModel(3L));
 
     // execute
     Employee actual = sut.execute(createEmployeeParam);
