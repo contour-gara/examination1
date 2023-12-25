@@ -23,6 +23,6 @@ public class CreateEmployeeUseCase {
    */
   @Transactional
   public Employee execute(CreateEmployeeParam createEmployeeParam) {
-    return repository.create(createEmployeeParam.convertToModel());
+    return repository.create(createEmployeeParam.convertToModel(repository.getNextSequence()));
   }
 }
