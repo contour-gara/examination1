@@ -38,7 +38,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
   @Override
   public Long getNextSequence() {
-    return 3L;
+    return mapper.getNextSequence();
   }
 
   /**
