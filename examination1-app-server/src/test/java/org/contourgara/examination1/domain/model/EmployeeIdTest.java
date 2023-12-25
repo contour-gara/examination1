@@ -51,7 +51,7 @@ class EmployeeIdTest {
     EmployeeId sut = EmployeeId.of(3L);
 
     // execute
-    String actual = sut.getValue();
+    String actual = sut.value();
 
     // expected
     String expected = "3";

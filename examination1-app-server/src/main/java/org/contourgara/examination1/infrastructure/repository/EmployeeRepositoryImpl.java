@@ -1,12 +1,9 @@
 package org.contourgara.examination1.infrastructure.repository;
 
-import static java.util.Objects.isNull;
-
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.contourgara.examination1.domain.model.Employee;
-import org.contourgara.examination1.domain.model.EmployeeId;
 import org.contourgara.examination1.domain.repository.EmployeeRepository;
 import org.contourgara.examination1.infrastructure.entity.EmployeeEntity;
 import org.contourgara.examination1.infrastructure.mapper.EmployeeMapper;
@@ -36,6 +33,9 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     return Optional.ofNullable(mapper.findById(id)).map(EmployeeEntity::convertToModel);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Long getNextSequence() {
     return mapper.getNextSequence();
@@ -48,7 +48,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
   public Employee create(Employee employee) {
     mapper.create(
         new EmployeeEntity(
-            employee.employeeId().getValue(),
+            employee.employeeId().value(),
             employee.firstName(),
             employee.lastName()
         )

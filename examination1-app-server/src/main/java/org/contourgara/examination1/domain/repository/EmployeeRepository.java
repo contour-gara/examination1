@@ -23,6 +23,11 @@ public interface EmployeeRepository {
    */
   Optional<Employee> findById(String id);
 
+  /**
+   * 次のシーケンスを取得し、シーケンスを更新します。
+   *
+   * @return 次のシーケンス。
+   */
   Long getNextSequence();
 
   /**

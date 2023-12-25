@@ -23,7 +23,7 @@ public record EmployeeResponse(
    */
   public static EmployeeResponse of(Employee employee) {
     return new EmployeeResponse(
-        employee.employeeId().getValue(),
+        employee.employeeId().value(),
         employee.firstName(),
         employee.lastName()
     );

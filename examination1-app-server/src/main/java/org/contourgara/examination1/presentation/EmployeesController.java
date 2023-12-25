@@ -82,7 +82,7 @@ public class EmployeesController {
 
     URI uri = UriComponentsBuilder
         .fromUriString(ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString())
-        .path("/" + employee.employeeId().getValue())
+        .path("/" + employee.employeeId().value())
         .build()
         .toUri();
 
