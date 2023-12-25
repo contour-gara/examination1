@@ -14,6 +14,8 @@ import org.contourgara.examination1.infrastructure.mapper.EmployeeMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -118,10 +120,14 @@ class EmployeeRepositoryImplTest {
       assertThat(actual).isEqualTo(expected);
     }
 
-    @Test
-    void 次のシーケンスを取得できる() {
+    @ParameterizedTest
+    @CsvSource(textBlock = """
+        1
+        2
+        """)
+    void 次のシーケンスを取得できる(Long expected) {
       // setup
-      doReturn(3L)
+      doReturn(expected)
           .when(mapper)
           .getNextSequence();
 
@@ -129,8 +135,6 @@ class EmployeeRepositoryImplTest {
       Long actual = sut.getNextSequence();
 
       // assert
-      Long expected = 3L;
-
       assertThat(actual).isEqualTo(expected);
     }
   }
