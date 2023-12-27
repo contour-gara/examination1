@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
 import org.contourgara.examination1.infrastructure.entity.EmployeeEntity;
+import org.contourgara.examination1.infrastructure.exception.QueryExecutionFailException;
 import org.contourgara.examination1.infrastructure.mapper.EmployeeMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -136,6 +137,34 @@ class EmployeeRepositoryImplTest {
 
       // assert
       assertThat(actual).isEqualTo(expected);
+    }
+  }
+
+  @Nested
+  class 削除 {
+    @Test
+    void 削除できる() {
+      // setup
+      doReturn(1)
+          .when(mapper)
+          .delete("1");
+
+      // expected
+      assertThatCode(() -> sut.delete("1"))
+          .doesNotThrowAnyException();
+    }
+
+    @Test
+    void 削除に失敗した場合() {
+      // setup
+      doReturn(0)
+          .when(mapper)
+          .delete("1");
+
+      // expected
+      assertThatThrownBy(() -> sut.delete("1"))
+          .isInstanceOf(QueryExecutionFailException.class)
+          .hasMessage("id = 1");
     }
   }
 }
