@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
 import java.util.List;
@@ -58,7 +59,7 @@ class EmployeesControllerTest {
   }
 
   @Test
-  void 全ての従業員情報が取得できる() {
+  void 全ての従業員が取得できる() {
     // setup
     doReturn(
         List.of(
@@ -139,7 +140,7 @@ class EmployeesControllerTest {
   }
 
   @Test
-  void 新規登録ができる() {
+  void 従業員を新規登録できる() {
     // setup
     doReturn(new Employee(new EmployeeId("3"), "Hanako", "Shirato"))
         .when(createEmployeeUseCase)
@@ -154,6 +155,16 @@ class EmployeesControllerTest {
         .then()
         .status(CREATED)
         .header("Location", equalTo("http://localhost/v1/employees/3"));
+  }
+
+  @Test
+  void 従業員を削除できる() {
+    // execute & assert
+    given()
+        .when()
+        .delete("/v1/employees/1")
+        .then()
+        .status(NO_CONTENT);
   }
 
   @Nested
