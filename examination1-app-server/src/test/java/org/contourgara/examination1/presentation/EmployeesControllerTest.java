@@ -157,7 +157,7 @@ class EmployeesControllerTest {
   }
 
   @Nested
-  class 入力検証が機能しているか {
+  class 新規登録で入力検証が機能しているか {
     @Test
     void 入力されていない場合() {
       // execute & assert
@@ -204,7 +204,7 @@ class EmployeesControllerTest {
     }
 
     @Test
-    void _100文字以上場合() {
+    void _100文字以上の場合() {
       // execute & assert
       given()
           .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -216,6 +216,57 @@ class EmployeesControllerTest {
           .body("code", equalTo("0002"))
           .body("message", equalTo("request validation error is occurred."))
           .body("details", hasSize(2));
+    }
+  }
+
+  @Nested
+  class 新規登録の入力検証で正しいメッセージが返されているか {
+    @Test
+    void 入力されていない場合() {
+      // execute & assert
+      given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
+          .body(marshalToJson(new CreateEmployeeRequest(null, "lastName")))
+          .when()
+          .post("/v1/employees")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0002"))
+          .body("message", equalTo("request validation error is occurred."))
+          .body("details", hasSize(1))
+          .body("details[0]", equalTo("firstName must not be blank"));
+    }
+
+    @Test
+    void アルファベット以外がある場合() {
+      // execute & assert
+      given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
+          .body(marshalToJson(new CreateEmployeeRequest("あ", "lastName")))
+          .when()
+          .post("/v1/employees")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0002"))
+          .body("message", equalTo("request validation error is occurred."))
+          .body("details", hasSize(1))
+          .body("details[0]", equalTo("firstName must match \"^[a-zA-Z]+$\""));
+    }
+
+    @Test
+    void _100文字以上の場合() {
+      // execute & assert
+      given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
+          .body(marshalToJson(new CreateEmployeeRequest("a".repeat(101), "lastName")))
+          .when()
+          .post("/v1/employees")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0002"))
+          .body("message", equalTo("request validation error is occurred."))
+          .body("details", hasSize(1))
+          .body("details[0]", equalTo("firstName length must be between 0 and 100"));
     }
   }
 }
