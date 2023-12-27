@@ -3,9 +3,11 @@ package org.contourgara.examination1.infrastructure.repository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.repository.EmployeeRepository;
 import org.contourgara.examination1.infrastructure.entity.EmployeeEntity;
+import org.contourgara.examination1.infrastructure.exception.QueryExecutionFailException;
 import org.contourgara.examination1.infrastructure.mapper.EmployeeMapper;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Repository;
  */
 @RequiredArgsConstructor
 @Repository
+@Slf4j
 public class EmployeeRepositoryImpl implements EmployeeRepository {
   private final EmployeeMapper mapper;
 
@@ -59,5 +62,12 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
   }
 
   @Override
-  public void delete(String id) {}
+  public void delete(String id) {
+    Integer count = mapper.delete(id);
+
+    if (count == 0) {
+      log.error("従業員の削除に失敗しました。[id = {}]", id);
+      throw new QueryExecutionFailException(id);
+    }
+  }
 }

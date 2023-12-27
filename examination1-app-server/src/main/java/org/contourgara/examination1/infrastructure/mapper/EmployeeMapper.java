@@ -48,4 +48,6 @@ public interface EmployeeMapper {
       "INSERT INTO employees (id, first_name, last_name) VALUES (#{id}, #{firstName}, #{lastName})"
   )
   void create(EmployeeEntity entity);
+
+  Integer delete(String id);
 }
