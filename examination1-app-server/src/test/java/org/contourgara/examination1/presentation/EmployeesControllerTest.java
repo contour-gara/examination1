@@ -12,6 +12,7 @@ import static org.springframework.http.HttpStatus.OK;
 import java.util.List;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.contourgara.examination1.application.CreateEmployeeUseCase;
+import org.contourgara.examination1.application.DeleteEmployeeUseCase;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
@@ -35,6 +36,9 @@ class EmployeesControllerTest {
 
   @MockBean
   CreateEmployeeUseCase createEmployeeUseCase;
+
+  @MockBean
+  DeleteEmployeeUseCase deleteEmployeeUseCase;
 
   @MockBean
   FindAllEmployeesUseCase findAllEmployeesUseCase;
@@ -181,6 +185,11 @@ class EmployeesControllerTest {
 
     @Test
     void 存在しない従業員を指定した場合() {
+      // setup
+      doThrow(new NotFoundEmployeeException("0"))
+          .when(deleteEmployeeUseCase)
+          .execute("0");
+
       // execute & assert
       given()
           .when()

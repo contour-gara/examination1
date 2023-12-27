@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.OK;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.contourgara.examination1.application.CreateEmployeeUseCase;
+import org.contourgara.examination1.application.DeleteEmployeeUseCase;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
 import org.contourgara.examination1.domain.model.Employee;
@@ -36,6 +37,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequiredArgsConstructor
 public class EmployeesController {
   private final CreateEmployeeUseCase createEmployeeUseCase;
+  private final DeleteEmployeeUseCase deleteEmployeeUseCase;
   private final FindAllEmployeesUseCase findAllEmployeesUseCase;
   private final FindEmployeeByIdUseCase findEmployeeByIdUseCase;
 
@@ -95,5 +97,7 @@ public class EmployeesController {
 
   @DeleteMapping("v1/employees/{id}")
   @ResponseStatus(NO_CONTENT)
-  public void deleteEmployee(@PathVariable("id") String id) {}
+  public void deleteEmployee(@PathVariable("id") String id) {
+    deleteEmployeeUseCase.execute(id);
+  }
 }
