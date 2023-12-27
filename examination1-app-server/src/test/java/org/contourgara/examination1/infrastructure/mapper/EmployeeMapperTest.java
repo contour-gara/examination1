@@ -147,4 +147,17 @@ class EmployeeMapperTest {
     // assert
     assertThat(sut).isNotNull();
   }
+
+  @Test
+  @DataSet(value = "datasets/setup/1-employee.yml")
+  @ExpectedDataSet(value = "datasets/expected/empty-table.yml")
+  void 削除ができる() {
+    // execute
+    Integer actual = sut.delete("1");
+
+    // assert
+    Integer expected = 1;
+
+    assertThat(actual).isEqualTo(expected);
+  }
 }
