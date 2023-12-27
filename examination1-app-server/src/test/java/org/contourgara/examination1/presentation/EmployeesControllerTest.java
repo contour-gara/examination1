@@ -157,14 +157,27 @@ class EmployeesControllerTest {
         .header("Location", equalTo("http://localhost/v1/employees/3"));
   }
 
-  @Test
-  void 従業員を削除できる() {
-    // execute & assert
-    given()
-        .when()
-        .delete("/v1/employees/1")
-        .then()
-        .status(NO_CONTENT);
+  @Nested
+  class 従業員削除 {
+    @Test
+    void ID1の従業員を削除できる() {
+      // execute & assert
+      given()
+          .when()
+          .delete("/v1/employees/1")
+          .then()
+          .status(NO_CONTENT);
+    }
+
+    @Test
+    void ID2の従業員を削除できる() {
+      // execute & assert
+      given()
+          .when()
+          .delete("/v1/employees/2")
+          .then()
+          .status(NO_CONTENT);
+    }
   }
 
   @Nested
