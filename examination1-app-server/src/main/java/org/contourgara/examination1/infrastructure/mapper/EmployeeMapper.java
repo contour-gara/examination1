@@ -1,6 +1,8 @@
 package org.contourgara.examination1.infrastructure.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -49,5 +51,6 @@ public interface EmployeeMapper {
   )
   void create(EmployeeEntity entity);
 
+  @Delete("DELETE from employees WHERE id = #{id}")
   Integer delete(String id);
 }
