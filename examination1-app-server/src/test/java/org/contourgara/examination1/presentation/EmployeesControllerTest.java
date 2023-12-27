@@ -178,6 +178,19 @@ class EmployeesControllerTest {
           .then()
           .status(NO_CONTENT);
     }
+
+    @Test
+    void 存在しない従業員を指定した場合() {
+      // execute & assert
+      given()
+          .when()
+          .delete("/v1/employees/0")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0003"))
+          .body("message", equalTo("specified employee [id = 0] is not found."))
+          .body("details", hasSize(0));
+    }
   }
 
   @Nested
