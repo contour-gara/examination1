@@ -46,6 +46,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
    */
   @Override
   public Employee create(Employee employee) {
+    // TODO: 戻り値をうけとり、作成できたかどうか確認
     mapper.create(
         new EmployeeEntity(
             employee.employeeId().value(),
