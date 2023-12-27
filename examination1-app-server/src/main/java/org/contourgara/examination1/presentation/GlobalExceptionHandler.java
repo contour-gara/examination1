@@ -66,5 +66,6 @@ public class GlobalExceptionHandler {
     );
   }
 
+  // TODO: クエリ実行エラーのハンドラーを作る
   // TODO: 汎用的なハンドラーを作る
 }
