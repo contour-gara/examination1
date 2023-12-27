@@ -37,4 +37,6 @@ public interface EmployeeRepository {
    * @return 登録された Employee。
    */
   Employee create(Employee employee);
+
+  void delete(String id);
 }

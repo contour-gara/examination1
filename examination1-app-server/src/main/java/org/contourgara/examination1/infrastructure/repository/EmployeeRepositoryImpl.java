@@ -57,4 +57,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     return employee;
   }
+
+  @Override
+  public void delete(String id) {}
 }

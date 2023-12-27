@@ -29,13 +29,9 @@ class DeleteEmployeeUseCaseTest {
   @Test
   void 従業員を削除できる() {
     // setup
-    doReturn(new Employee(new EmployeeId("1"), "Taro", "Yamada"))
+    doReturn(Optional.of(new Employee(new EmployeeId("1"), "Taro", "Yamada")))
         .when(repository)
         .findById("1");
-
-    doReturn(1)
-        .when(repository)
-        .delete("1");
 
     // execute & assert
     assertThatCode(() -> sut.execute("1"))
