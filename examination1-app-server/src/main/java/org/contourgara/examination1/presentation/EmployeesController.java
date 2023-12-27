@@ -93,7 +93,7 @@ public class EmployeesController {
     return ResponseEntity.created(uri).build();
   }
 
-  @DeleteMapping("v1/employees/1")
+  @DeleteMapping("v1/employees/{id}")
   @ResponseStatus(NO_CONTENT)
-  public void deleteEmployee() {}
+  public void deleteEmployee(@PathVariable("id") String id) {}
 }
