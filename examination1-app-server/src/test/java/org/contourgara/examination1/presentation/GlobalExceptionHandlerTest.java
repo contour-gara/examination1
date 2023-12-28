@@ -179,6 +179,39 @@ class GlobalExceptionHandlerTest {
   }
 
   @Nested
+  class 更新時の入力検証が機能しているか {
+    @Test
+    void アルファベット以外がある場合() {
+      // execute & assert
+      given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
+          .body(marshalToJson(new UpdateEmployeeRequest("あ", "あ")))
+          .when()
+          .patch("/v1/employees/1")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0002"))
+          .body("message", equalTo("request validation error is occurred."))
+          .body("details", hasSize(2));
+    }
+
+    @Test
+    void _100文字以上の場合() {
+      // execute & assert
+      given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
+          .body(marshalToJson(new UpdateEmployeeRequest("a".repeat(101), "a".repeat(101))))
+          .when()
+          .patch("/v1/employees/1")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0002"))
+          .body("message", equalTo("request validation error is occurred."))
+          .body("details", hasSize(2));
+    }
+  }
+
+  @Nested
   class 従業員が見つからない {
     @Test
     void 存在しないIDで検索した場合() {
