@@ -1,8 +1,7 @@
 package org.contourgara.examination1.domain.model;
 
 import static java.util.Objects.isNull;
-
-// TODO: ガード条件見直し
+import static org.apache.commons.lang3.StringUtils.isAlpha;
 
 /**
  * Employee クラスは従業員を表すモデルです。
@@ -25,9 +24,9 @@ public record Employee(
    */
   public Employee {
     if (isNull(employeeId)) throw new IllegalArgumentException("従業員 ID は null であってはなりません。");
-    if (isNull(firstName)) throw new IllegalArgumentException("名前は null であってはなりません。");
-    if (isNull(lastName)) throw new IllegalArgumentException("名字は null であってはなりません。");
-    if (firstName.length() > 100) throw new IllegalArgumentException("名前は 100 文字以内です。");
-    if (lastName.length() > 100) throw new IllegalArgumentException("名字は 100 文字以内です。");
+    if (!isAlpha(firstName)) throw new IllegalArgumentException(String.format("firstName が不適切です。[firstName = %s]", firstName));
+    if (!isAlpha(lastName)) throw new IllegalArgumentException(String.format("lastName が不適切です。[lastName = %s]", lastName));
+    if (firstName.length() > 100) throw new IllegalArgumentException(String.format("firstName が 100 文字を超えています。[firstName = %s]", firstName));
+    if (lastName.length() > 100) throw new IllegalArgumentException(String.format("lastName が 100 文字を超えています。[lastName = %s]", lastName));
   }
 }
