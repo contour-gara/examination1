@@ -232,5 +232,23 @@ class GlobalExceptionHandlerTest {
           .body("message", equalTo("unexpected exception has occurred. [クエリが正常に実行できませんでした。]"))
           .body("details", hasSize(0));
     }
+
+    @Test
+    void 予期しない例外が発生した場合() {
+      // setup
+      doThrow(new RuntimeException())
+          .when(findAllEmployeesUseCase)
+          .execute();
+
+      // execute & assert
+      given()
+          .when()
+          .get("/v1/employees")
+          .then()
+          .status(INTERNAL_SERVER_ERROR)
+          .body("code", equalTo("0001"))
+          .body("message", equalTo("unexpected exception has occurred. [null]"))
+          .body("details", hasSize(0));
+    }
   }
 }
