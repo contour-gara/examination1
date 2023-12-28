@@ -14,11 +14,13 @@ import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
 import org.contourgara.examination1.application.UpdateEmployeeUseCase;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
+import org.contourgara.examination1.application.param.UpdateEmployeeParam;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
 import org.contourgara.examination1.infrastructure.mapper.EmployeeMapper;
 import org.contourgara.examination1.infrastructure.repository.EmployeeRepositoryImpl;
 import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;
+import org.contourgara.examination1.presentation.request.UpdateEmployeeRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -189,6 +191,26 @@ class GlobalExceptionHandlerTest {
       given()
           .when()
           .get("/v1/employees/0")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0003"))
+          .body("message", equalTo("specified employee [id = 0] is not found."))
+          .body("details", hasSize(0));
+    }
+
+    @Test
+    void 存在しないIDで更新した場合() {
+      // setup
+      doThrow(new NotFoundEmployeeException("0"))
+          .when(updateEmployeeUseCase)
+          .execute(new UpdateEmployeeParam("0", "Taro", "Yamada"));
+
+      // execute & assert
+      given()
+          .contentType(MediaType.APPLICATION_JSON_VALUE)
+          .body(marshalToJson(new UpdateEmployeeRequest("Taro", "Yamada")))
+          .when()
+          .patch("/v1/employees/0")
           .then()
           .status(BAD_REQUEST)
           .body("code", equalTo("0003"))
