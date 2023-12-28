@@ -15,5 +15,7 @@ public class UpdateEmployeeUseCase {
   public void execute(UpdateEmployeeParam param) {
     Employee employee = repository.findById(param.id())
         .orElseThrow(() -> new NotFoundEmployeeException(param.id()));
+
+    repository.update(param.convertToModel(employee));
   }
 }

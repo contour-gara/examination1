@@ -38,5 +38,7 @@ public interface EmployeeRepository {
    */
   Employee create(Employee employee);
 
+  void update(Employee employee);
+
   void delete(String id);
 }

@@ -12,6 +12,7 @@ import org.contourgara.examination1.application.CreateEmployeeUseCase;
 import org.contourgara.examination1.application.DeleteEmployeeUseCase;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
+import org.contourgara.examination1.application.UpdateEmployeeUseCase;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
@@ -49,6 +50,9 @@ class GlobalExceptionHandlerTest {
 
   @MockBean
   FindEmployeeByIdUseCase findEmployeeByIdUseCase;
+
+  @SpyBean
+  UpdateEmployeeUseCase updateEmployeeUseCase;
 
   @MockBean
   EmployeeMapper mapper;

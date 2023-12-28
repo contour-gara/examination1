@@ -62,6 +62,9 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
   }
 
   @Override
+  public void update(Employee employee) {}
+
+  @Override
   public void delete(String id) {
     Integer count = mapper.delete(id);
 
