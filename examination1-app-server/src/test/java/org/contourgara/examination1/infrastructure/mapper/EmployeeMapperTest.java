@@ -103,7 +103,7 @@ class EmployeeMapperTest {
   }
 
   @Nested
-  class シーケンス {
+  class シーケンス取得 {
     @Test
     @DataSet(
         value = "datasets/setup/empty-table.yml",
@@ -140,7 +140,7 @@ class EmployeeMapperTest {
   @Test
   @DataSet(value = "datasets/setup/empty-table.yml")
   @ExpectedDataSet(value = "datasets/expected/1-employee.yml")
-  void 新規登録ができる() {
+  void 新規登録できる() {
     // execute
     sut.create(new EmployeeEntity("1", "Taro", "Yamada"));
 
@@ -150,8 +150,24 @@ class EmployeeMapperTest {
 
   @Test
   @DataSet(value = "datasets/setup/1-employee.yml")
+  @ExpectedDataSet(value = "datasets/expected/1-employee-updated.yml")
+  void 更新できる() {
+    // setup
+    EmployeeEntity entity = new EmployeeEntity("1", "Taro", "Yamamoto");
+
+    // execute
+    Integer actual = sut.update(entity);
+
+    // assert
+    Integer expected = 1;
+
+    assertThat(actual).isEqualTo(expected);
+  }
+
+  @Test
+  @DataSet(value = "datasets/setup/1-employee.yml")
   @ExpectedDataSet(value = "datasets/expected/empty-table.yml")
-  void 削除ができる() {
+  void 削除できる() {
     // execute
     Integer actual = sut.delete("1");
 
