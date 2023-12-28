@@ -16,7 +16,7 @@ class EmployeeIdTest {
     // execute & assert
     assertThatCode(() -> new EmployeeId(value))
       .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("従業員 ID は 1 以上 999999999 以下です。");
+      .hasMessage(String.format("従業員 ID は 1 以上 999999999 以下です。[id = %s]", value));
   }
 
   @ParameterizedTest
@@ -42,7 +42,7 @@ class EmployeeIdTest {
     // execute & assert
     assertThatCode(() -> new EmployeeId(value))
       .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("従業員 ID は数字です。");
+      .hasMessage(String.format("従業員 ID は数字です。[id = %s]", value));
   }
 
   @Test

@@ -3,6 +3,8 @@ package org.contourgara.examination1.presentation.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.contourgara.examination1.application.param.UpdateEmployeeParam;
 
+// TODO: validation
+
 public record UpdateEmployeeRequest(
     @JsonProperty("firstName")
     String firstName,
