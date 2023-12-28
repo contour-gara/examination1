@@ -1,5 +1,9 @@
 package org.contourgara.examination1.application;
 
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import java.util.Optional;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
 import org.contourgara.examination1.application.param.UpdateEmployeeParam;
 import org.contourgara.examination1.domain.model.Employee;
@@ -10,11 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class UpdateEmployeeUseCaseTest {
   @InjectMocks

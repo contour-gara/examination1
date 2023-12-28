@@ -13,7 +13,8 @@ public record CreateEmployeeParam(String firstName, String lastName) {
   /**
    * 従業員モデルに変換します。
    *
-   * @return Employee。従業員 ID は空文字です。
+   * @param id 新規登録する従業員 ID。データベースから次のシーケンスを取得し使います。
+   * @return {@link Employee}。
    */
   public Employee convertToModel(Long id) {
     return new Employee(EmployeeId.of(id), firstName, lastName);

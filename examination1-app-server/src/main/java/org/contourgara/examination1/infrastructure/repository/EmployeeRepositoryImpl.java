@@ -62,6 +62,9 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     return employee;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void update(Employee employee) {
     Integer count = mapper.update(
@@ -75,6 +78,9 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     checkQueryExecution(count, employee.employeeId().value());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void delete(String id) {
     Integer count = mapper.delete(id);
@@ -82,6 +88,9 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     checkQueryExecution(count, id);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   private void checkQueryExecution(Integer count, String id) {
     if (count != 1) {
       log.error("クエリが正常に実行できませんでした。[id = {}]", id);

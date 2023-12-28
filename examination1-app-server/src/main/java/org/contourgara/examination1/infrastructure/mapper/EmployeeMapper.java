@@ -1,7 +1,6 @@
 package org.contourgara.examination1.infrastructure.mapper;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,7 +17,7 @@ public interface EmployeeMapper {
   /**
    * 従業員テーブルにあるデータを全件取得します。
    *
-   * @return EmployeeEntity の List。
+   * @return {@link EmployeeEntity} の List。
    */
   @Select("SELECT id, first_name, last_name FROM employees")
   List<EmployeeEntity> findAll();
@@ -27,7 +26,7 @@ public interface EmployeeMapper {
    * 従業員テーブルにあるデータから ID で検索します。
    *
    * @param id 検索したい ID。
-   * @return EmployeeEntity。従業員が見つからなかった場合は null が返ります。
+   * @return {@link EmployeeEntity}。従業員が見つからなかった場合は null が返ります。
    */
   @Select("SELECT id, first_name, last_name FROM employees WHERE id = #{id}")
   EmployeeEntity findById(String id);
@@ -46,15 +45,30 @@ public interface EmployeeMapper {
    * 次のシーケンスを取得してから使用してください。
    *
    * @param entity 登録する従業員。従業員 ID は次のシーケンスの値を使用してください。
+   * @return 作成件数。
    */
   @Insert(
       "INSERT INTO employees (id, first_name, last_name) VALUES (#{id}, #{firstName}, #{lastName})"
   )
   Integer create(EmployeeEntity entity);
 
-  @Update("UPDATE employees SET first_Name = #{firstName}, last_Name = #{lastName} WHERE id = #{id}")
+  /**
+   * 従業員を更新します。
+   *
+   * @param entity 更新する従業員。
+   * @return 更新件数。
+   */
+  @Update(
+      "UPDATE employees SET first_Name = #{firstName}, last_Name = #{lastName} WHERE id = #{id}"
+  )
   Integer update(EmployeeEntity entity);
 
+  /**
+   * 従業員を削除します。
+   *
+   * @param id 削除する従業員 ID。
+   * @return 削除件数。
+   */
   @Delete("DELETE from employees WHERE id = #{id}")
   Integer delete(String id);
 }

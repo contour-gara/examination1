@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
    * レスポンスステータスは BAD_REQUEST です。
    *
    * @param e リクエストに入力違反があった時の例外。
-   * @return ErrorResponse。レスポンスボディになります。code は 0002 で、details には入力違反の内容が含まれます。
+   * @return {@link ErrorResponse}。レスポンスボディになります。code は 0002 で、details には入力違反の内容が含まれます。
    */
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(BAD_REQUEST)
@@ -54,7 +54,7 @@ public class GlobalExceptionHandler {
    * レスポンスステータスは BAD_REQUEST です。
    *
    * @param e 従業員が見つからなかった時の例外。
-   * @return ErrorResponse。レスポンスボディになります。code は 0003 で、message には見つからなかった従業員 ID が含まれます。
+   * @return {@link ErrorResponse}。レスポンスボディになります。code は 0003 で、message には見つからなかった従業員 ID が含まれます。
    */
   @ExceptionHandler(NotFoundEmployeeException.class)
   @ResponseStatus(BAD_REQUEST)
@@ -67,6 +67,13 @@ public class GlobalExceptionHandler {
     );
   }
 
+  /**
+   * 予期しない例外が発生した場合にこのメソッドが実行されます。
+   * レスポンスステータスは INTERNAL_SERVER_ERROR です。
+   *
+   * @param e 予期しない例外。
+   * @return {@link ErrorResponse}。レスポンスボディになります。code は 0001 です。
+   */
   @ExceptionHandler(Exception.class)
   @ResponseStatus(INTERNAL_SERVER_ERROR)
   public ErrorResponse handleException(Exception e) {

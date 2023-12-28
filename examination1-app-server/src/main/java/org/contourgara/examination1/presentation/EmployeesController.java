@@ -30,8 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
-// TODO: API 仕様としてリクエストパラメータの必須、任意や入力検証内容を javadoc に書く。
-
 /**
  * 従業員情報のエンドポイントです。
  */
@@ -57,7 +55,7 @@ public class EmployeesController {
   /**
    * 全ての従業員情報を返します。
    *
-   * @return AllEmployeesResponse。
+   * @return {@link AllEmployeesResponse}。
    */
   @GetMapping("v1/employees")
   @ResponseStatus(OK)
@@ -69,7 +67,7 @@ public class EmployeesController {
    * ID 指定された従業員情報を返します。
    *
    * @param id 取得したい従業員の ID。
-   * @return EmployeeResponse。
+   * @return {@link EmployeeResponse}。
    */
   @GetMapping("v1/employees/{id}")
   @ResponseStatus(OK)
@@ -80,8 +78,8 @@ public class EmployeesController {
   /**
    * 従業員を新規登録します。
    *
-   * @param request 新規登録する従業員。
-   * @return ResponseEntity。ヘッダーの Location に登録した従業員情報にアクセスする URL が含まれます。
+   * @param request 新規登録する従業員。名前と名字が必須で、アルファベットのみで 100 文字以内です。
+   * @return {@link ResponseEntity}。ヘッダーの Location に登録した従業員情報にアクセスする URL が含まれます。
    */
   @PostMapping("v1/employees")
   @ResponseStatus(CREATED)
@@ -99,6 +97,12 @@ public class EmployeesController {
     return ResponseEntity.created(uri).build();
   }
 
+  /**
+   * 従業員を更新します。
+   *
+   * @param id 更新する従業員 ID。
+   * @param request 更新する従業員。名前と名字は任意で、アルファベットのみで 100 文字以内です。
+   */
   @PatchMapping("v1/employees/{id}")
   @ResponseStatus(NO_CONTENT)
   public void updateEmployee(
@@ -108,6 +112,11 @@ public class EmployeesController {
     updateEmployeeUseCase.execute(request.convertToParam(id));
   }
 
+  /**
+   * 従業員を削除します。
+   *
+   * @param id 削除する従業員 ID。
+   */
   @DeleteMapping("v1/employees/{id}")
   @ResponseStatus(NO_CONTENT)
   public void deleteEmployee(@PathVariable("id") String id) {

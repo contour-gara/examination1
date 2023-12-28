@@ -28,7 +28,8 @@ public record EmployeeId(String value) {
   /**
    * Long 型の数値から EmployeeId を初期化します。
    *
-   * @return EmployeeId。
+   * @param id 従業員 ID。
+   * @return {@link EmployeeId}。
    */
   public static EmployeeId of(Long id) {
     return new EmployeeId(id.toString());
