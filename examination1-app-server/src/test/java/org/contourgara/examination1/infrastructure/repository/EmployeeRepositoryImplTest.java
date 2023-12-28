@@ -164,7 +164,7 @@ class EmployeeRepositoryImplTest {
       // expected
       assertThatThrownBy(() -> sut.delete("1"))
           .isInstanceOf(QueryExecutionFailException.class)
-          .hasMessage("id = 1");
+          .hasMessage("クエリが正常に実行できませんでした。");
     }
   }
 }
