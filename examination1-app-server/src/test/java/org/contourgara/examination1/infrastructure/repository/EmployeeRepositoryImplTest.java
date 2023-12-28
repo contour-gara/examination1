@@ -141,6 +141,34 @@ class EmployeeRepositoryImplTest {
   }
 
   @Nested
+  class 更新 {
+    @Test
+    void 更新できる() {
+      // setup
+      doReturn(1)
+          .when(mapper)
+          .update(new EmployeeEntity("1", "Taro", "Yamamoto"));
+
+      // execute
+      assertThatCode(() -> sut.update(new Employee(new EmployeeId("1"), "Taro", "Yamamoto")))
+          .doesNotThrowAnyException();
+    }
+
+    @Test
+    void 更新に失敗した場合() {
+      // setup
+      doReturn(0)
+          .when(mapper)
+          .update(new EmployeeEntity("1", "Taro", "Yamamoto"));
+
+      // execute
+      assertThatThrownBy(() -> sut.update(new Employee(new EmployeeId("1"), "Taro", "Yamamoto")))
+          .isInstanceOf(QueryExecutionFailException.class)
+          .hasMessage("クエリが正常に実行できませんでした。");
+    }
+  }
+
+  @Nested
   class 削除 {
     @Test
     void 削除できる() {
