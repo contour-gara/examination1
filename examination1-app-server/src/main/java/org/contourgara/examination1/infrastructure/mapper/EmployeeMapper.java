@@ -50,7 +50,7 @@ public interface EmployeeMapper {
   @Insert(
       "INSERT INTO employees (id, first_name, last_name) VALUES (#{id}, #{firstName}, #{lastName})"
   )
-  void create(EmployeeEntity entity);
+  Integer create(EmployeeEntity entity);
 
   @Update("UPDATE employees SET first_Name = #{firstName}, last_Name = #{lastName} WHERE id = #{id}")
   Integer update(EmployeeEntity entity);
