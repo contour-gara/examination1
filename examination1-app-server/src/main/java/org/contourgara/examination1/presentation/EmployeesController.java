@@ -10,6 +10,7 @@ import org.contourgara.examination1.application.CreateEmployeeUseCase;
 import org.contourgara.examination1.application.DeleteEmployeeUseCase;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
+import org.contourgara.examination1.application.UpdateEmployeeUseCase;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;
 import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +42,7 @@ public class EmployeesController {
   private final DeleteEmployeeUseCase deleteEmployeeUseCase;
   private final FindAllEmployeesUseCase findAllEmployeesUseCase;
   private final FindEmployeeByIdUseCase findEmployeeByIdUseCase;
+  private final UpdateEmployeeUseCase updateEmployeeUseCase;
 
   /**
    * root URL にアクセスされた場合、ステータスコード 200 を返します。
@@ -93,6 +96,12 @@ public class EmployeesController {
         .toUri();
 
     return ResponseEntity.created(uri).build();
+  }
+
+  @PatchMapping("v1/employees/{id}")
+  @ResponseStatus(NO_CONTENT)
+  public void updateEmployee(@PathVariable("id") String id) {
+//    updateEmployeeUseCase.execute(id);
   }
 
   @DeleteMapping("v1/employees/{id}")
