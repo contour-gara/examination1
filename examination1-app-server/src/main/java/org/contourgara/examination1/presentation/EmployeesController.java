@@ -13,6 +13,7 @@ import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
 import org.contourgara.examination1.application.UpdateEmployeeUseCase;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;
+import org.contourgara.examination1.presentation.request.UpdateEmployeeRequest;
 import org.contourgara.examination1.presentation.response.AllEmployeesResponse;
 import org.contourgara.examination1.presentation.response.EmployeeResponse;
 import org.springframework.http.ResponseEntity;
@@ -100,8 +101,11 @@ public class EmployeesController {
 
   @PatchMapping("v1/employees/{id}")
   @ResponseStatus(NO_CONTENT)
-  public void updateEmployee(@PathVariable("id") String id) {
-//    updateEmployeeUseCase.execute(id);
+  public void updateEmployee(
+      @PathVariable("id") String id,
+      @RequestBody UpdateEmployeeRequest request
+  ) {
+    updateEmployeeUseCase.execute(request.convertToParam(id));
   }
 
   @DeleteMapping("v1/employees/{id}")

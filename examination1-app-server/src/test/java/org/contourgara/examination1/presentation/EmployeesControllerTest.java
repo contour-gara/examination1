@@ -19,6 +19,7 @@ import org.contourgara.examination1.application.param.CreateEmployeeParam;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
 import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;
+import org.contourgara.examination1.presentation.request.UpdateEmployeeRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -131,12 +132,14 @@ class EmployeesControllerTest {
 
   @ParameterizedTest
   @CsvSource(textBlock = """
-      1
-      2
+      1,,Yamamoto
+      2,Saburo,
       """)
-  void 従業員を更新できる(String id) {
+  void 従業員を更新できる(String id, String firstName, String lastName) {
     // execute & assert
     given()
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .body(marshalToJson(new UpdateEmployeeRequest(firstName, lastName)))
         .when()
         .patch("/v1/employees/" + id)
         .then()
