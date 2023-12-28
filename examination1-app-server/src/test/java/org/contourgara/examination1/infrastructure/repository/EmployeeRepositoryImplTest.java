@@ -149,8 +149,10 @@ class EmployeeRepositoryImplTest {
           .when(mapper)
           .update(new EmployeeEntity("1", "Taro", "Yamamoto"));
 
-      // execute
-      assertThatCode(() -> sut.update(new Employee(new EmployeeId("1"), "Taro", "Yamamoto")))
+      Employee employee = new Employee(new EmployeeId("1"), "Taro", "Yamamoto");
+
+      // execute & assert
+      assertThatCode(() -> sut.update(employee))
           .doesNotThrowAnyException();
     }
 
@@ -161,8 +163,10 @@ class EmployeeRepositoryImplTest {
           .when(mapper)
           .update(new EmployeeEntity("1", "Taro", "Yamamoto"));
 
-      // execute
-      assertThatThrownBy(() -> sut.update(new Employee(new EmployeeId("1"), "Taro", "Yamamoto")))
+      Employee employee = new Employee(new EmployeeId("1"), "Taro", "Yamamoto");
+
+      // execute & assert
+      assertThatThrownBy(() -> sut.update(employee))
           .isInstanceOf(QueryExecutionFailException.class)
           .hasMessage("クエリが正常に実行できませんでした。");
     }
@@ -177,7 +181,7 @@ class EmployeeRepositoryImplTest {
           .when(mapper)
           .delete("1");
 
-      // expected
+      // execute & assert
       assertThatCode(() -> sut.delete("1"))
           .doesNotThrowAnyException();
     }
@@ -189,7 +193,7 @@ class EmployeeRepositoryImplTest {
           .when(mapper)
           .delete("1");
 
-      // expected
+      // execute & assert
       assertThatThrownBy(() -> sut.delete("1"))
           .isInstanceOf(QueryExecutionFailException.class)
           .hasMessage("クエリが正常に実行できませんでした。");
