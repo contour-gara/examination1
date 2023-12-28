@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.contourgara.examination1.infrastructure.entity.EmployeeEntity;
 
 /**
@@ -51,6 +52,7 @@ public interface EmployeeMapper {
   )
   void create(EmployeeEntity entity);
 
+  @Update("UPDATE employees SET first_Name = #{firstName}, last_Name = #{lastName} WHERE id = #{id}")
   Integer update(EmployeeEntity entity);
 
   @Delete("DELETE from employees WHERE id = #{id}")
