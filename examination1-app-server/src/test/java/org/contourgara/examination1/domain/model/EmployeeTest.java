@@ -2,58 +2,72 @@ package org.contourgara.examination1.domain.model;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 class EmployeeTest {
-  private static final EmployeeId EMPLOYEE_ID = new EmployeeId("1");
-  private static final String FIRST_NAME = "Taro";
-  private static final String LAST_NAME = "Yamada";
-
-  @Nested
-  class メンバー変数がnullの場合 {
-    @Test
-    void 従業員IDがnullの場合例外が飛ぶ() {
-      // execute & assert
-      assertThatCode(() -> new Employee(null, FIRST_NAME, LAST_NAME))
-          .isInstanceOf(IllegalArgumentException.class)
-          .hasMessage("従業員 ID は null であってはなりません。");
-    }
-
-    @Test
-    void 名前がnullの場合例外が飛ぶ() {
-      // execute & assert
-      assertThatCode(() -> new Employee(EMPLOYEE_ID, null, LAST_NAME))
-          .isInstanceOf(IllegalArgumentException.class)
-          .hasMessage("名前は null であってはなりません。");
-    }
-
-    @Test
-    void 名字がnullの場合例外が飛ぶ() {
-      // execute & assert
-      assertThatCode(() -> new Employee(EMPLOYEE_ID, FIRST_NAME, null))
-          .isInstanceOf(IllegalArgumentException.class)
-          .hasMessage("名字は null であってはなりません。");
-    }
+  @Test
+  void 従業員IDが不適切な場合例外が飛ぶ() {
+    // execute & assert
+    assertThatCode(() -> new Employee(null, "Taro", "Yamada"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("従業員 ID は null であってはなりません。");
   }
 
-  @Nested
-  class _100文字以上の場合 {
-    private static final String OVER_100_STRING = "a".repeat(101);
-    @Test
-    void 名前が100文字以上の場合例外が飛ぶ() {
-      // execute & assert
-      assertThatCode(() -> new Employee(EMPLOYEE_ID, OVER_100_STRING, LAST_NAME))
-          .isInstanceOf(IllegalArgumentException.class)
-          .hasMessage("名前は 100 文字以内です。");
-    }
+  @ParameterizedTest
+  @CsvSource(textBlock = """
+          , Yamada, firstName,
+        '', Yamada, firstName,  ''
+       ' ', Yamada, firstName, ' '
+       a1-, Yamada, firstName, a1-
+      Taro,       ,  lastName,
+      Taro,     '',  lastName,  ''
+      Taro,    ' ',  lastName, ' '
+      Taro,    a1-,  lastName, a1-
+      """)
+  void 名前や名字が不適切な場合例外が飛ぶ(
+      String firstName, String lastName, String validateFailedName, String validateFailedValue
+  ) {
+    // setup
+    EmployeeId employeeId = new EmployeeId("1");
 
-    @Test
-    void 名字が100文字以上の場合例外が飛ぶ() {
-      // execute & assert
-      assertThatCode(() -> new Employee(EMPLOYEE_ID, FIRST_NAME, OVER_100_STRING))
-          .isInstanceOf(IllegalArgumentException.class)
-          .hasMessage("名字は 100 文字以内です。");
-    }
+    // execute & assert
+    assertThatThrownBy(() -> new Employee(employeeId, firstName, lastName))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(
+            String.format(
+                "%s が不適切です。[%s = %s]", validateFailedName, validateFailedName, validateFailedValue
+            )
+        );
+  }
+
+  @ParameterizedTest
+  @MethodSource("createData")
+  void 名前が100文字以上の場合例外が飛ぶ(
+      String firstName, String lastName, String validateFailedName, String validateFailedValue
+  ) {
+    // setup
+    EmployeeId employeeId = new EmployeeId("1");
+
+    // execute & assert
+    assertThatThrownBy(() -> new Employee(employeeId, firstName, lastName))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(
+            String.format(
+                "%s が 100 文字を超えています。[%s = %s]", validateFailedName, validateFailedName, validateFailedValue
+            )
+        );
+  }
+
+  private static Stream<Arguments> createData() {
+    return Stream.of(
+        Arguments.of("a".repeat(101), "Yamada", "firstName", "a".repeat(101)),
+        Arguments.of("Taro", "a".repeat(101), "lastName", "a".repeat(101))
+    );
   }
 }
