@@ -72,7 +72,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     );
 
     if (count != 1) {
-      log.error("従業員の削除に失敗しました。[id = {}]", employee.employeeId().value());
+      log.error("従業員の更新に失敗しました。[id = {}]", employee.employeeId().value());
       throw new QueryExecutionFailException("クエリが正常に実行できませんでした。");
     }
   }
