@@ -46,6 +46,27 @@
     かつmessageとして"request validation error is occurred."が返却される
     かつdetailsとして詳細なエラー内容を含むリストが返却される
 
+  シナリオ:従業員情報を変更できる
+    前提適切なBaseURIが指定されている
+    もし従業員情報を変更する
+      | firstName | lastName |
+      | Bill      | Gates    |
+    ならばHTTPステータスコードとして204が返却される
+    かつ空のBodyが返却される
+    かつ従業員情報が変更されている
+      | firstName | lastName |
+      | Bill      | Gates    |
+
+  シナリオ:存在しないIDで従業員情報を変更すると、エラーが返却される
+    前提適切なBaseURIが指定されている
+    もし存在しないIDで従業員情報を変更する
+      | firstName | lastName |
+      | Bill      | Gates    |
+    ならばHTTPステータスコードとして400が返却される
+    かつcodeとして"0003"が返却される
+    かつmessageとして"specified employee [id = %s] is not found."が返却される
+    かつdetailsとして空のリストが返却される
+
   シナリオ:指定したIDの従業員情報を削除できる
     前提適切なBaseURIが指定されている
     もしIDを指定して従業員情報を削除する
