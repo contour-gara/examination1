@@ -142,10 +142,12 @@ class EmployeeMapperTest {
   @ExpectedDataSet(value = "datasets/expected/1-employee.yml")
   void 新規登録できる() {
     // execute
-    sut.create(new EmployeeEntity("1", "Taro", "Yamada"));
+    Integer actual = sut.create(new EmployeeEntity("1", "Taro", "Yamada"));
 
     // assert
-    assertThat(sut).isNotNull();
+    Integer expected = 1;
+
+    assertThat(actual).isEqualTo(expected);
   }
 
   @Test
