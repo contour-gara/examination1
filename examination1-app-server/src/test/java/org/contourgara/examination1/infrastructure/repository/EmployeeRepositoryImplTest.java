@@ -112,6 +112,11 @@ class EmployeeRepositoryImplTest {
   class 新規登録 {
     @Test
     void 新規登録できる() {
+      // setup
+      doReturn(1)
+          .when(mapper)
+          .create(new EmployeeEntity("3", "Hanako", "Shirato"));
+
       // execute
       Employee actual = sut.create(new Employee(new EmployeeId("3"), "Hanako", "Shirato"));
 

@@ -57,10 +57,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         )
     );
 
-    if (count != 1) {
-      log.error("従業員の登録に失敗しました。[id = {}]", employee.employeeId().value());
-      throw new QueryExecutionFailException("クエリが正常に実行できませんでした。");
-    }
+    checkQueryExecution(count, employee.employeeId().value());
 
     return employee;
   }
@@ -75,18 +72,19 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         )
     );
 
-    if (count != 1) {
-      log.error("従業員の更新に失敗しました。[id = {}]", employee.employeeId().value());
-      throw new QueryExecutionFailException("クエリが正常に実行できませんでした。");
-    }
+    checkQueryExecution(count, employee.employeeId().value());
   }
 
   @Override
   public void delete(String id) {
     Integer count = mapper.delete(id);
 
+    checkQueryExecution(count, id);
+  }
+
+  private void checkQueryExecution(Integer count, String id) {
     if (count != 1) {
-      log.error("従業員の削除に失敗しました。[id = {}]", id);
+      log.error("クエリが正常に実行できませんでした。[id = {}]", id);
       throw new QueryExecutionFailException("クエリが正常に実行できませんでした。");
     }
   }
