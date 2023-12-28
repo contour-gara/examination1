@@ -51,6 +51,8 @@ public interface EmployeeMapper {
   )
   void create(EmployeeEntity entity);
 
+  Integer update(EmployeeEntity entity);
+
   @Delete("DELETE from employees WHERE id = #{id}")
   Integer delete(String id);
 }

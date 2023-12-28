@@ -62,7 +62,20 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
   }
 
   @Override
-  public void update(Employee employee) {}
+  public void update(Employee employee) {
+    Integer count = mapper.update(
+        new EmployeeEntity(
+            employee.employeeId().value(),
+            employee.firstName(),
+            employee.lastName()
+        )
+    );
+
+    if (count != 1) {
+      log.error("従業員の削除に失敗しました。[id = {}]", employee.employeeId().value());
+      throw new QueryExecutionFailException("クエリが正常に実行できませんでした。");
+    }
+  }
 
   @Override
   public void delete(String id) {
