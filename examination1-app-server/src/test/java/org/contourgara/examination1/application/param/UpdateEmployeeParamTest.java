@@ -1,10 +1,10 @@
 package org.contourgara.examination1.application.param;
 
+import static org.assertj.core.api.Assertions.*;
+
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
 
 class UpdateEmployeeParamTest {
   @Test
