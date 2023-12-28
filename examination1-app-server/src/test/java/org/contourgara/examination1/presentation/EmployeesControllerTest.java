@@ -136,6 +136,7 @@ class EmployeesControllerTest {
         .when()
         .delete("/v1/employees/" + id)
         .then()
-        .status(NO_CONTENT);
+        .status(NO_CONTENT)
+        .body(equalTo(""));
   }
 }
