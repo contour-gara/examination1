@@ -49,7 +49,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
    */
   @Override
   public Employee create(Employee employee) {
-    // TODO: 戻り値をうけとり、作成できたかどうか確認
     Integer count = mapper.create(
         new EmployeeEntity(
             employee.employeeId().value(),
@@ -57,6 +56,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
             employee.lastName()
         )
     );
+
+    if (count != 1) {
+      log.error("従業員の登録に失敗しました。[id = {}]", employee.employeeId().value());
+      throw new QueryExecutionFailException("クエリが正常に実行できませんでした。");
+    }
 
     return employee;
   }
