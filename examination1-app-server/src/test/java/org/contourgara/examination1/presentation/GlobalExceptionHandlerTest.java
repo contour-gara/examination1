@@ -58,24 +58,6 @@ class GlobalExceptionHandlerTest {
     RestAssuredMockMvc.mockMvc(mockMvc);
   }
 
-  @Test
-  void 存在しないIDで検索した場合() {
-    // setup
-    doThrow(new NotFoundEmployeeException("0"))
-        .when(findEmployeeByIdUseCase)
-        .execute("0");
-
-    // execute & assert
-    given()
-        .when()
-        .get("/v1/employees/0")
-        .then()
-        .status(BAD_REQUEST)
-        .body("code", equalTo("0003"))
-        .body("message", equalTo("specified employee [id = 0] is not found."))
-        .body("details", hasSize(0));
-  }
-
   @Nested
   class 新規登録で入力検証が機能しているか {
     @Test
@@ -190,41 +172,65 @@ class GlobalExceptionHandlerTest {
     }
   }
 
-  @Test
-  void 存在しない従業員を削除した場合() {
-    // setup
-    doThrow(new NotFoundEmployeeException("0"))
-        .when(deleteEmployeeUseCase)
-        .execute("0");
+  @Nested
+  class 従業員が見つからない {
+    @Test
+    void 存在しないIDで検索した場合() {
+      // setup
+      doThrow(new NotFoundEmployeeException("0"))
+          .when(findEmployeeByIdUseCase)
+          .execute("0");
 
-    // execute & assert
-    given()
-        .when()
-        .delete("/v1/employees/0")
-        .then()
-        .status(BAD_REQUEST)
-        .body("code", equalTo("0003"))
-        .body("message", equalTo("specified employee [id = 0] is not found."))
-        .body("details", hasSize(0));
+      // execute & assert
+      given()
+          .when()
+          .get("/v1/employees/0")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0003"))
+          .body("message", equalTo("specified employee [id = 0] is not found."))
+          .body("details", hasSize(0));
+    }
+
+    @Test
+    void 存在しない従業員を削除した場合() {
+      // setup
+      doThrow(new NotFoundEmployeeException("0"))
+          .when(deleteEmployeeUseCase)
+          .execute("0");
+
+      // execute & assert
+      given()
+          .when()
+          .delete("/v1/employees/0")
+          .then()
+          .status(BAD_REQUEST)
+          .body("code", equalTo("0003"))
+          .body("message", equalTo("specified employee [id = 0] is not found."))
+          .body("details", hasSize(0));
+    }
   }
 
-  @Test
-  void 従業員削除で削除した件数が1でなかった場合() {
-    // setup
-    doReturn(Optional.of(new Employee(new EmployeeId("1"), "Taro", "Yamada")))
-        .when(repository)
-        .findById("1");
+  @Nested
+  class 予期しない例外が発生した場合 {
+    @Test
+    void 従業員削除で削除した件数が1でなかった場合() {
+      // setup
+      doReturn(Optional.of(new Employee(new EmployeeId("1"), "Taro", "Yamada")))
+          .when(repository)
+          .findById("1");
 
-    doReturn(2).when(mapper).delete("1");
+      doReturn(2).when(mapper).delete("1");
 
-    // execute & assert
-    given()
-        .when()
-        .delete("/v1/employees/1")
-        .then()
-        .status(INTERNAL_SERVER_ERROR)
-        .body("code", equalTo("0001"))
-        .body("message", equalTo("unexpected exception has occurred. [クエリが正常に実行できませんでした。]"))
-        .body("details", hasSize(0));
+      // execute & assert
+      given()
+          .when()
+          .delete("/v1/employees/1")
+          .then()
+          .status(INTERNAL_SERVER_ERROR)
+          .body("code", equalTo("0001"))
+          .body("message", equalTo("unexpected exception has occurred. [クエリが正常に実行できませんでした。]"))
+          .body("details", hasSize(0));
+    }
   }
 }
