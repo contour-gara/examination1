@@ -121,6 +121,21 @@ class EmployeeRepositoryImplTest {
       assertThat(actual).isEqualTo(expected);
     }
 
+    @Test
+    void 新規登録に失敗した場合() {
+      // setup
+      doReturn(0)
+          .when(mapper)
+          .create(new EmployeeEntity("1", "Taro", "Yamada"));
+
+      Employee employee = new Employee(new EmployeeId("1"), "Taro", "Yamada");
+
+      // execute & assert
+      assertThatThrownBy(() -> sut.create(employee))
+          .isInstanceOf(QueryExecutionFailException.class)
+          .hasMessage("クエリが正常に実行できませんでした。");
+    }
+
     @ParameterizedTest
     @CsvSource(textBlock = """
         1
