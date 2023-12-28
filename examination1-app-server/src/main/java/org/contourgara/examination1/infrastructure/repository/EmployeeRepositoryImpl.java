@@ -65,9 +65,9 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
   public void delete(String id) {
     Integer count = mapper.delete(id);
 
-    if (count == 0) {
+    if (count != 1) {
       log.error("従業員の削除に失敗しました。[id = {}]", id);
-      throw new QueryExecutionFailException(id);
+      throw new QueryExecutionFailException("クエリが正常に実行できませんでした。");
     }
   }
 }

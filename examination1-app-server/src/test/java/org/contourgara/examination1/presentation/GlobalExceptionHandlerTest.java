@@ -15,7 +15,6 @@ import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
-import org.contourgara.examination1.domain.repository.EmployeeRepository;
 import org.contourgara.examination1.infrastructure.mapper.EmployeeMapper;
 import org.contourgara.examination1.infrastructure.repository.EmployeeRepositoryImpl;
 import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;

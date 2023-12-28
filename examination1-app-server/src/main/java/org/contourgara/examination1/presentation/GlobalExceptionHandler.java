@@ -2,6 +2,7 @@ package org.contourgara.examination1.presentation;
 
 import static java.util.Collections.emptyList;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -18,24 +19,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-  /**
-   * ID 検索した際に従業員が見つからない場合にこのメソッドが実行されます。
-   * レスポンスステータスは BAD_REQUEST です。
-   *
-   * @param e 従業員が見つからなかった時の例外。
-   * @return ErrorResponse。レスポンスボディになります。code は 0003 で、message には見つからなかった従業員 ID が含まれます。
-   */
-  @ExceptionHandler(NotFoundEmployeeException.class)
-  @ResponseStatus(BAD_REQUEST)
-  public ErrorResponse handleNotFoundEmployeeException(NotFoundEmployeeException e) {
-    log.warn("指定された ID の従業員が見つかりません。[id = {}]", e.getId(), e);
-    return new ErrorResponse(
-        "0003",
-        String.format("specified employee [id = %s] is not found.", e.getId()),
-        emptyList()
-    );
-  }
-
   /**
    * リクエストに入力違反があった場合にこのメソッドが実行されます。
    * レスポンスステータスは BAD_REQUEST です。
@@ -66,6 +49,31 @@ public class GlobalExceptionHandler {
     );
   }
 
-  // TODO: クエリ実行エラーのハンドラーを作る
-  // TODO: 汎用的なハンドラーを作る
+  /**
+   * ID 検索した際に従業員が見つからない場合にこのメソッドが実行されます。
+   * レスポンスステータスは BAD_REQUEST です。
+   *
+   * @param e 従業員が見つからなかった時の例外。
+   * @return ErrorResponse。レスポンスボディになります。code は 0003 で、message には見つからなかった従業員 ID が含まれます。
+   */
+  @ExceptionHandler(NotFoundEmployeeException.class)
+  @ResponseStatus(BAD_REQUEST)
+  public ErrorResponse handleNotFoundEmployeeException(NotFoundEmployeeException e) {
+    log.warn("指定された ID の従業員が見つかりません。[id = {}]", e.getId(), e);
+    return new ErrorResponse(
+        "0003",
+        String.format("specified employee [id = %s] is not found.", e.getId()),
+        emptyList()
+    );
+  }
+
+  @ExceptionHandler(Exception.class)
+  @ResponseStatus(INTERNAL_SERVER_ERROR)
+  public ErrorResponse handleException(Exception e) {
+    return new ErrorResponse(
+        "0001",
+        String.format("unexpected exception has occurred. [%s]", e.getMessage()),
+        emptyList()
+    );
+  }
 }
