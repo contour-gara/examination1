@@ -45,6 +45,9 @@ class EmployeesControllerTest {
   @MockBean
   FindEmployeeByIdUseCase findEmployeeByIdUseCase;
 
+  @MockBean
+  UpdateEmployeeUseCase updateEmployeeUseCase;
+
   @BeforeEach
   void setUp() {
     RestAssuredMockMvc.mockMvc(mockMvc);
@@ -123,6 +126,21 @@ class EmployeesControllerTest {
         .then()
         .status(CREATED)
         .header("Location", equalTo("http://localhost/v1/employees/3"));
+  }
+
+  @ParameterizedTest
+  @CsvSource(textBlock = """
+      1
+      2
+      """)
+  void 従業員を更新できる(String id) {
+    // execute & assert
+    given()
+        .when()
+        .patch("/v1/employees/" + id)
+        .then()
+        .status(NO_CONTENT)
+        .body(equalTo(""));
   }
 
   @ParameterizedTest
