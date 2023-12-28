@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 public class UpdateEmployeeUseCase {
   private final EmployeeRepository repository;
 
-  public void execute(UpdateEmployeeParam updateEmployeeParam) {
-    Employee employee = repository.findById(updateEmployeeParam.id())
-        .orElseThrow(() -> new NotFoundEmployeeException(updateEmployeeParam.id()));
+  public void execute(UpdateEmployeeParam param) {
+    Employee employee = repository.findById(param.id())
+        .orElseThrow(() -> new NotFoundEmployeeException(param.id()));
   }
 }

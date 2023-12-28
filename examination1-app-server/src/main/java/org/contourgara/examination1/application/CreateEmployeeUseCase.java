@@ -18,11 +18,11 @@ public class CreateEmployeeUseCase {
   /**
    * 従業員の新規登録を実行します。
    *
-   * @param createEmployeeParam 新規登録する従業員情報。
+   * @param param 新規登録する従業員情報。
    * @return 登録された Employee。
    */
   @Transactional
-  public Employee execute(CreateEmployeeParam createEmployeeParam) {
-    return repository.create(createEmployeeParam.convertToModel(repository.getNextSequence()));
+  public Employee execute(CreateEmployeeParam param) {
+    return repository.create(param.convertToModel(repository.getNextSequence()));
   }
 }
