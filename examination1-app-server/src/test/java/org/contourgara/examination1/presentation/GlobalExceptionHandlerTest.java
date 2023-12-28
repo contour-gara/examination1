@@ -5,6 +5,7 @@ import static org.contourgara.examination1.TestUtils.*;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.contourgara.examination1.application.CreateEmployeeUseCase;
@@ -12,6 +13,11 @@ import org.contourgara.examination1.application.DeleteEmployeeUseCase;
 import org.contourgara.examination1.application.FindAllEmployeesUseCase;
 import org.contourgara.examination1.application.FindEmployeeByIdUseCase;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
+import org.contourgara.examination1.domain.model.Employee;
+import org.contourgara.examination1.domain.model.EmployeeId;
+import org.contourgara.examination1.domain.repository.EmployeeRepository;
+import org.contourgara.examination1.infrastructure.mapper.EmployeeMapper;
+import org.contourgara.examination1.infrastructure.repository.EmployeeRepositoryImpl;
 import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -19,8 +25,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Optional;
 
 @WebMvcTest
 class GlobalExceptionHandlerTest {
@@ -30,14 +39,20 @@ class GlobalExceptionHandlerTest {
   @MockBean
   CreateEmployeeUseCase createEmployeeUseCase;
 
-  @MockBean
+  @SpyBean
   DeleteEmployeeUseCase deleteEmployeeUseCase;
+
+  @SpyBean
+  EmployeeRepositoryImpl repository;
 
   @MockBean
   FindAllEmployeesUseCase findAllEmployeesUseCase;
 
   @MockBean
   FindEmployeeByIdUseCase findEmployeeByIdUseCase;
+
+  @MockBean
+  EmployeeMapper mapper;
 
   @BeforeEach
   void setUp() {
@@ -191,6 +206,26 @@ class GlobalExceptionHandlerTest {
         .status(BAD_REQUEST)
         .body("code", equalTo("0003"))
         .body("message", equalTo("specified employee [id = 0] is not found."))
+        .body("details", hasSize(0));
+  }
+
+  @Test
+  void 従業員削除で削除した件数が1でなかった場合() {
+    // setup
+    doReturn(Optional.of(new Employee(new EmployeeId("1"), "Taro", "Yamada")))
+        .when(repository)
+        .findById("1");
+
+    doReturn(2).when(mapper).delete("1");
+
+    // execute & assert
+    given()
+        .when()
+        .delete("/v1/employees/1")
+        .then()
+        .status(INTERNAL_SERVER_ERROR)
+        .body("code", equalTo("0001"))
+        .body("message", equalTo("unexpected exception has occurred. [クエリが正常に実行できませんでした。]"))
         .body("details", hasSize(0));
   }
 }
