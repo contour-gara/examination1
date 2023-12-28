@@ -1,5 +1,6 @@
 package org.contourgara.examination1.presentation.request;
 
+import org.contourgara.examination1.application.param.UpdateEmployeeParam;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
