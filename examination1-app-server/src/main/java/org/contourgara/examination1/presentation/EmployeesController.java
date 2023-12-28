@@ -103,7 +103,7 @@ public class EmployeesController {
   @ResponseStatus(NO_CONTENT)
   public void updateEmployee(
       @PathVariable("id") String id,
-      @RequestBody UpdateEmployeeRequest request
+      @RequestBody @Validated UpdateEmployeeRequest request
   ) {
     updateEmployeeUseCase.execute(request.convertToParam(id));
   }
