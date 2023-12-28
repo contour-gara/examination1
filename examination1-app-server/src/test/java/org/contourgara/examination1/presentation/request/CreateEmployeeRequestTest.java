@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class CreateEmployeeRequestTest {
   @Test
-  void パラムに変換できる() {
+  void ユースケースに渡すオブジェクトに変換できる() {
     // setup
     CreateEmployeeRequest sut = new CreateEmployeeRequest("Hanako", "Shirato");
 
