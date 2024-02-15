@@ -18,13 +18,13 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <spring-boot.version>3.2.0</spring-boot.version>
+        <spring-boot.version>3.2.2</spring-boot.version>
         <rest-assured.version>5.4.0</rest-assured.version>
-        <cucumber.version>7.14.1</cucumber.version>
-        <commons-validator.version>1.7</commons-validator.version>
+        <cucumber.version>7.15.0</cucumber.version>
+        <commons-validator.version>1.8.0</commons-validator.version>
 
-        <maven-failsafe-plugin.version>3.2.1</maven-failsafe-plugin.version>
-        <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.2.5</maven-failsafe-plugin.version>
+        <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <docker-compose-maven-plugin.version>1.0.0</docker-compose-maven-plugin.version>
     </properties>
 
