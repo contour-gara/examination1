@@ -137,7 +137,7 @@ class EmployeeRepositoryImplTest {
       // execute & assert
       assertThatThrownBy(() -> sut.create(employee))
           .isInstanceOf(QueryExecutionFailException.class)
-          .hasMessage("クエリが正常に実行できませんでした。");
+          .hasMessage("クエリが正常に実行できませんでした。[id = 1]");
     }
 
     @ParameterizedTest
@@ -187,7 +187,7 @@ class EmployeeRepositoryImplTest {
       // execute & assert
       assertThatThrownBy(() -> sut.update(employee))
           .isInstanceOf(QueryExecutionFailException.class)
-          .hasMessage("クエリが正常に実行できませんでした。");
+          .hasMessage("クエリが正常に実行できませんでした。[id = 1]");
     }
   }
 
@@ -215,7 +215,7 @@ class EmployeeRepositoryImplTest {
       // execute & assert
       assertThatThrownBy(() -> sut.delete("1"))
           .isInstanceOf(QueryExecutionFailException.class)
-          .hasMessage("クエリが正常に実行できませんでした。");
+          .hasMessage("クエリが正常に実行できませんでした。[id = 1]");
     }
   }
 }

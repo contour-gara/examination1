@@ -18,6 +18,8 @@ import org.contourgara.examination1.application.exception.NotFoundEmployeeExcept
 import org.contourgara.examination1.application.param.UpdateEmployeeParam;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
+import org.contourgara.examination1.infrastructure.entity.EmployeeEntity;
+import org.contourgara.examination1.infrastructure.exception.QueryExecutionFailException;
 import org.contourgara.examination1.infrastructure.mapper.EmployeeMapper;
 import org.contourgara.examination1.infrastructure.repository.EmployeeRepositoryImpl;
 import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;
@@ -29,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -46,7 +49,7 @@ class GlobalExceptionHandlerTest {
   @SpyBean
   EmployeeRepositoryImpl repository;
 
-  @MockBean
+  @SpyBean
   FindAllEmployeesUseCase findAllEmployeesUseCase;
 
   @MockBean
@@ -286,8 +289,46 @@ class GlobalExceptionHandlerTest {
           .delete("/v1/employees/1")
           .then()
           .status(INTERNAL_SERVER_ERROR)
-          .body("code", equalTo("0001"))
-          .body("message", equalTo("unexpected exception has occurred. [クエリが正常に実行できませんでした。]"))
+          .body("code", equalTo("0004"))
+          .body("message", equalTo("クエリが正常に実行できませんでした。[id = 1]"))
+          .body("details", hasSize(0));
+    }
+
+    @Test
+    void クエリの実行で予期しない例外が発生した場合() {
+      // setup
+      doReturn(new EmployeeEntity("1", "Taro", "Yamada"))
+          .when(mapper)
+          .findById("1");
+
+      doReturn(2).when(mapper).delete("1");
+
+      // execute & assert
+      given()
+          .when()
+          .delete("/v1/employees/1")
+          .then()
+          .status(INTERNAL_SERVER_ERROR)
+          .body("code", equalTo("0004"))
+          .body("message", equalTo("クエリが正常に実行できませんでした。[id = 1]"))
+          .body("details", hasSize(0));
+    }
+
+    @Test
+    void データベースの接続で予期しない例外が発生した場合() {
+      // setup
+      doThrow(new DataAccessException(""){})
+          .when(mapper)
+          .findAll();
+
+      // execute & assert
+      given()
+          .when()
+          .get("/v1/employees")
+          .then()
+          .status(INTERNAL_SERVER_ERROR)
+          .body("code", equalTo("0005"))
+          .body("message", equalTo("Database の接続で予期しない例外が発生しました。"))
           .body("details", hasSize(0));
     }
 
@@ -304,7 +345,7 @@ class GlobalExceptionHandlerTest {
           .get("/v1/employees")
           .then()
           .status(INTERNAL_SERVER_ERROR)
-          .body("code", equalTo("0001"))
+          .body("code", equalTo("0006"))
           .body("message", equalTo("unexpected exception has occurred. [null]"))
           .body("details", hasSize(0));
     }

@@ -7,7 +7,9 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
+import org.contourgara.examination1.infrastructure.exception.QueryExecutionFailException;
 import org.contourgara.examination1.presentation.response.ErrorResponse;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -67,6 +69,20 @@ public class GlobalExceptionHandler {
     );
   }
 
+  @ExceptionHandler(QueryExecutionFailException.class)
+  @ResponseStatus(INTERNAL_SERVER_ERROR)
+  public ErrorResponse handleQueryExecutionFailException(QueryExecutionFailException e) {
+    log.error(e.getMessage(), e);
+    return new ErrorResponse("0004", e.getMessage(), emptyList());
+  }
+
+  @ExceptionHandler(DataAccessException.class)
+  @ResponseStatus(INTERNAL_SERVER_ERROR)
+  public ErrorResponse handleDataAccessException(DataAccessException e) {
+    log.error("Database の接続で予期しない例外が発生しました。", e);
+    return new ErrorResponse("0005", "Database の接続で予期しない例外が発生しました。", emptyList());
+  }
+
   /**
    * 予期しない例外が発生した場合にこのメソッドが実行されます。
    * レスポンスステータスは INTERNAL_SERVER_ERROR です。
@@ -77,8 +93,9 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(Exception.class)
   @ResponseStatus(INTERNAL_SERVER_ERROR)
   public ErrorResponse handleException(Exception e) {
+    log.error("unexpected exception has occurred. [{}]", e.getMessage());
     return new ErrorResponse(
-        "0001",
+        "0006",
         String.format("unexpected exception has occurred. [%s]", e.getMessage()),
         emptyList()
     );

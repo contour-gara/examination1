@@ -84,7 +84,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
   @Override
   public void delete(String id) {
     Integer count = mapper.delete(id);
-
     checkQueryExecution(count, id);
   }
 
@@ -93,8 +92,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
    */
   private void checkQueryExecution(Integer count, String id) {
     if (count != 1) {
-      log.error("クエリが正常に実行できませんでした。[id = {}]", id);
-      throw new QueryExecutionFailException("クエリが正常に実行できませんでした。");
+      throw new QueryExecutionFailException(String.format("クエリが正常に実行できませんでした。[id = %s]", id));
     }
   }
 }
