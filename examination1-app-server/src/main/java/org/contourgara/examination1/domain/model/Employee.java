@@ -1,9 +1,9 @@
 package org.contourgara.examination1.domain.model;
 
-import org.contourgara.examination1.domain.DomainValidateException;
-
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isAlpha;
+
+import org.contourgara.examination1.domain.exception.DomainValidateException;
 
 /**
  * Employee クラスは従業員を表すモデルです。

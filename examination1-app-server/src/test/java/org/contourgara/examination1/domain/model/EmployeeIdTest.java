@@ -2,7 +2,7 @@ package org.contourgara.examination1.domain.model;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.contourgara.examination1.domain.DomainValidateException;
+import org.contourgara.examination1.domain.exception.DomainValidateException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

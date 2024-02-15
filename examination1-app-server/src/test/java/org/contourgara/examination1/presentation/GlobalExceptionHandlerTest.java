@@ -19,7 +19,6 @@ import org.contourgara.examination1.application.param.UpdateEmployeeParam;
 import org.contourgara.examination1.domain.model.Employee;
 import org.contourgara.examination1.domain.model.EmployeeId;
 import org.contourgara.examination1.infrastructure.entity.EmployeeEntity;
-import org.contourgara.examination1.infrastructure.exception.QueryExecutionFailException;
 import org.contourgara.examination1.infrastructure.mapper.EmployeeMapper;
 import org.contourgara.examination1.infrastructure.repository.EmployeeRepositoryImpl;
 import org.contourgara.examination1.presentation.request.CreateEmployeeRequest;

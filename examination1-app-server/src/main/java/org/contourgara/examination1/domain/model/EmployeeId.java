@@ -2,7 +2,7 @@ package org.contourgara.examination1.domain.model;
 
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 
-import org.contourgara.examination1.domain.DomainValidateException;
+import org.contourgara.examination1.domain.exception.DomainValidateException;
 
 /**
  * EmployeeId クラスは従業員 ID を表すモデルです。
