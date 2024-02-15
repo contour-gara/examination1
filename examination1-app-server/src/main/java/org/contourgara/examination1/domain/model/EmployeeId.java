@@ -2,6 +2,8 @@ package org.contourgara.examination1.domain.model;
 
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 
+import org.contourgara.examination1.domain.DomainValidateException;
+
 /**
  * EmployeeId クラスは従業員 ID を表すモデルです。
  *
@@ -15,11 +17,11 @@ public record EmployeeId(String value) {
    */
   public EmployeeId {
     if (!isNumeric(value)) {
-      throw new IllegalArgumentException(String.format("従業員 ID は数字です。[id = %s]", value));
+      throw new DomainValidateException(String.format("従業員 ID は数字です。[id = %s]", value));
     }
 
     if ((Integer.parseInt(value) <= 0) || (Integer.parseInt(value) >= 1000000000)) {
-      throw new IllegalArgumentException(
+      throw new DomainValidateException(
           String.format("従業員 ID は 1 以上 999999999 以下です。[id = %s]", value)
       );
     }

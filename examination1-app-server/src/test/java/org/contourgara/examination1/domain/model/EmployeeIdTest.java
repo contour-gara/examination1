@@ -2,6 +2,7 @@ package org.contourgara.examination1.domain.model;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.contourgara.examination1.domain.DomainValidateException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,7 +16,7 @@ class EmployeeIdTest {
   void idが無効な数字の場合例外が飛ぶ(String value) {
     // execute & assert
     assertThatCode(() -> new EmployeeId(value))
-      .isInstanceOf(IllegalArgumentException.class)
+      .isInstanceOf(DomainValidateException.class)
       .hasMessage(String.format("従業員 ID は 1 以上 999999999 以下です。[id = %s]", value));
   }
 
@@ -41,7 +42,7 @@ class EmployeeIdTest {
   void idが数字でない場合例外が飛ぶ(String value) {
     // execute & assert
     assertThatCode(() -> new EmployeeId(value))
-      .isInstanceOf(IllegalArgumentException.class)
+      .isInstanceOf(DomainValidateException.class)
       .hasMessage(String.format("従業員 ID は数字です。[id = %s]", value));
   }
 

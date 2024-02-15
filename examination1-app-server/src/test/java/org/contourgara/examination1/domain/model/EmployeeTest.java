@@ -3,6 +3,7 @@ package org.contourgara.examination1.domain.model;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;
+import org.contourgara.examination1.domain.DomainValidateException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,7 +15,7 @@ class EmployeeTest {
   void 従業員IDが不適切な場合例外が飛ぶ() {
     // execute & assert
     assertThatCode(() -> new Employee(null, "Taro", "Yamada"))
-        .isInstanceOf(IllegalArgumentException.class)
+        .isInstanceOf(DomainValidateException.class)
         .hasMessage("従業員 ID は null であってはなりません。");
   }
 
@@ -37,7 +38,7 @@ class EmployeeTest {
 
     // execute & assert
     assertThatThrownBy(() -> new Employee(employeeId, firstName, lastName))
-        .isInstanceOf(IllegalArgumentException.class)
+        .isInstanceOf(DomainValidateException.class)
         .hasMessage(
             String.format(
                 "%s が不適切です。[%s = %s]", validateFailedName, validateFailedName, validateFailedValue
@@ -55,7 +56,7 @@ class EmployeeTest {
 
     // execute & assert
     assertThatThrownBy(() -> new Employee(employeeId, firstName, lastName))
-        .isInstanceOf(IllegalArgumentException.class)
+        .isInstanceOf(DomainValidateException.class)
         .hasMessage(
             String.format(
                 "%s が 100 文字を超えています。[%s = %s]", validateFailedName, validateFailedName, validateFailedValue
