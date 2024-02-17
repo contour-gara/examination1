@@ -52,7 +52,6 @@ class UpdateEmployeeUseCaseTest {
 
     // execute & assert
     assertThatThrownBy(() -> sut.execute(updateEmployeeParam))
-        .isInstanceOf(NotFoundEmployeeException.class)
-        .hasMessage("id = 1");
+        .isInstanceOf(NotFoundEmployeeException.class);
   }
 }

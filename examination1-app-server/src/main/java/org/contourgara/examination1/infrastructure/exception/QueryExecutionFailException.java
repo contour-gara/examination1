@@ -1,15 +1,13 @@
 package org.contourgara.examination1.infrastructure.exception;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 /**
  * QueryExecutionFailException はクエリの実行結果が予期されない結果だった場合に投げられます。
  */
+@Getter
+@RequiredArgsConstructor
 public class QueryExecutionFailException extends RuntimeException {
-  /**
-   * QueryExecutionFailException を初期化します。
-   *
-   * @param message エラーメッセージ。
-   */
-  public QueryExecutionFailException(String message) {
-    super(message);
-  }
+  private final String id;
 }

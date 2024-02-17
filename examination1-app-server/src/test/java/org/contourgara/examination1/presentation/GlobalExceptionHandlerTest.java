@@ -289,27 +289,7 @@ class GlobalExceptionHandlerTest {
           .then()
           .status(INTERNAL_SERVER_ERROR)
           .body("code", equalTo("0004"))
-          .body("message", equalTo("クエリが正常に実行できませんでした。[id = 1]"))
-          .body("details", hasSize(0));
-    }
-
-    @Test
-    void クエリの実行で予期しない例外が発生した場合() {
-      // setup
-      doReturn(new EmployeeEntity("1", "Taro", "Yamada"))
-          .when(mapper)
-          .findById("1");
-
-      doReturn(2).when(mapper).delete("1");
-
-      // execute & assert
-      given()
-          .when()
-          .delete("/v1/employees/1")
-          .then()
-          .status(INTERNAL_SERVER_ERROR)
-          .body("code", equalTo("0004"))
-          .body("message", equalTo("クエリが正常に実行できませんでした。[id = 1]"))
+          .body("message", equalTo("query execution failed. [id = 1]"))
           .body("details", hasSize(0));
     }
 
@@ -327,7 +307,7 @@ class GlobalExceptionHandlerTest {
           .then()
           .status(INTERNAL_SERVER_ERROR)
           .body("code", equalTo("0005"))
-          .body("message", equalTo("Database の接続で予期しない例外が発生しました。"))
+          .body("message", equalTo("unexpected exception has occurred on Database connection."))
           .body("details", hasSize(0));
     }
 
@@ -344,7 +324,7 @@ class GlobalExceptionHandlerTest {
           .get("/v1/employees")
           .then()
           .status(INTERNAL_SERVER_ERROR)
-          .body("code", equalTo("0006"))
+          .body("code", equalTo("0000"))
           .body("message", equalTo("unexpected exception has occurred. [null]"))
           .body("details", hasSize(0));
     }

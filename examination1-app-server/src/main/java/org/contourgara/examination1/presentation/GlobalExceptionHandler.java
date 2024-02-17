@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.contourgara.examination1.application.exception.NotFoundEmployeeException;
+import org.contourgara.examination1.common.ErrorMessageCode;
 import org.contourgara.examination1.infrastructure.exception.QueryExecutionFailException;
 import org.contourgara.examination1.presentation.response.ErrorResponse;
 import org.springframework.dao.DataAccessException;
@@ -34,7 +35,7 @@ public class GlobalExceptionHandler {
     List<String> details = e.getFieldErrors().stream()
         .map(error -> {
           log.warn(
-              "入力エラーが発生しました。[{} = {}: {}]",
+              "request validation error is occurred. [{} = {}: {}]",
               error.getField(),
               error.getRejectedValue(),
               error.getDefaultMessage()
@@ -45,8 +46,8 @@ public class GlobalExceptionHandler {
         .toList();
 
     return new ErrorResponse(
-        "0002",
-        "request validation error is occurred.",
+        ErrorMessageCode.VALIDATE_ERROR_IN_PRESENTATION.getCode(),
+        ErrorMessageCode.VALIDATE_ERROR_IN_PRESENTATION.getMessage(),
         details
     );
   }
@@ -61,26 +62,48 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(NotFoundEmployeeException.class)
   @ResponseStatus(BAD_REQUEST)
   public ErrorResponse handleNotFoundEmployeeException(NotFoundEmployeeException e) {
-    log.warn("指定された ID の従業員が見つかりません。[id = {}]", e.getId(), e);
+    log.warn("specified employee [id = {}] is not found.", e.getId(), e);
     return new ErrorResponse(
-        "0003",
-        String.format("specified employee [id = %s] is not found.", e.getId()),
+        ErrorMessageCode.NOT_FOUND_EMPLOYEE.getCode(),
+        String.format(ErrorMessageCode.NOT_FOUND_EMPLOYEE.getMessage(), e.getId()),
         emptyList()
     );
   }
 
+  /**
+   * クエリの実行結果に異常があった場合にこのメソッドが実行されます。
+   * レスポンスステータスは INTERNAL_SERVER_ERROR です。
+   *
+   * @param e {@link QueryExecutionFailException}
+   * @return {@link ErrorResponse}。レスポンスボディになります。code は 0004 で、message にはエラーが起きた従業員 ID が含まれます。
+   */
   @ExceptionHandler(QueryExecutionFailException.class)
   @ResponseStatus(INTERNAL_SERVER_ERROR)
   public ErrorResponse handleQueryExecutionFailException(QueryExecutionFailException e) {
-    log.error(e.getMessage(), e);
-    return new ErrorResponse("0004", e.getMessage(), emptyList());
+    log.error(String.format(ErrorMessageCode.QUERY_EXECUTION_ERROR.getMessage(), e.getId()), e);
+    return new ErrorResponse(
+        ErrorMessageCode.QUERY_EXECUTION_ERROR.getCode(),
+        String.format(ErrorMessageCode.QUERY_EXECUTION_ERROR.getMessage(), e.getId()),
+        emptyList()
+    );
   }
 
+  /**
+   * データベースの接続に失敗した場合にこのメソッドが実行サれます。
+   * レスポンスステータスは INTERNAL_SERVER_ERROR です。
+   *
+   * @param e {@link DataAccessException}
+   * @return {@link ErrorResponse}。レスポンスボディになります。code は 0005 です。
+   */
   @ExceptionHandler(DataAccessException.class)
   @ResponseStatus(INTERNAL_SERVER_ERROR)
   public ErrorResponse handleDataAccessException(DataAccessException e) {
     log.error("Database の接続で予期しない例外が発生しました。", e);
-    return new ErrorResponse("0005", "Database の接続で予期しない例外が発生しました。", emptyList());
+    return new ErrorResponse(
+        ErrorMessageCode.DATA_ACCESS_ERROR.getCode(),
+        ErrorMessageCode.DATA_ACCESS_ERROR.getMessage(),
+        emptyList()
+    );
   }
 
   /**
@@ -95,8 +118,8 @@ public class GlobalExceptionHandler {
   public ErrorResponse handleException(Exception e) {
     log.error("unexpected exception has occurred. [{}]", e.getMessage());
     return new ErrorResponse(
-        "0006",
-        String.format("unexpected exception has occurred. [%s]", e.getMessage()),
+        ErrorMessageCode.UNEXPECTED_ERROR.getCode(),
+        String.format(ErrorMessageCode.UNEXPECTED_ERROR.getMessage(), e.getMessage()),
         emptyList()
     );
   }

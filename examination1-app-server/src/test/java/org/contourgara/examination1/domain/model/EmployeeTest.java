@@ -16,7 +16,7 @@ class EmployeeTest {
     // execute & assert
     assertThatCode(() -> new Employee(null, "Taro", "Yamada"))
         .isInstanceOf(DomainValidateException.class)
-        .hasMessage("従業員 ID は null であってはなりません。");
+        .hasMessage("employeeId must not be null. [employeeId = null]");
   }
 
   @ParameterizedTest
@@ -41,7 +41,7 @@ class EmployeeTest {
         .isInstanceOf(DomainValidateException.class)
         .hasMessage(
             String.format(
-                "%s が不適切です。[%s = %s]", validateFailedName, validateFailedName, validateFailedValue
+                "%s must be alphabet. [%s = %s]", validateFailedName, validateFailedName, validateFailedValue
             )
         );
   }
@@ -59,7 +59,7 @@ class EmployeeTest {
         .isInstanceOf(DomainValidateException.class)
         .hasMessage(
             String.format(
-                "%s が 100 文字を超えています。[%s = %s]", validateFailedName, validateFailedName, validateFailedValue
+                "%s length must be between 1 and 100. [%s = %s]", validateFailedName, validateFailedName, validateFailedValue
             )
         );
   }

@@ -92,7 +92,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
    */
   private void checkQueryExecution(Integer count, String id) {
     if (count != 1) {
-      throw new QueryExecutionFailException(String.format("クエリが正常に実行できませんでした。[id = %s]", id));
+      throw new QueryExecutionFailException(id);
     }
   }
 }

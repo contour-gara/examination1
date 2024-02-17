@@ -2,6 +2,7 @@ package org.contourgara.examination1.domain.model;
 
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 
+import org.contourgara.examination1.common.DomainErrorMessage;
 import org.contourgara.examination1.domain.exception.DomainValidateException;
 
 /**
@@ -17,12 +18,14 @@ public record EmployeeId(String value) {
    */
   public EmployeeId {
     if (!isNumeric(value)) {
-      throw new DomainValidateException(String.format("従業員 ID は数字です。[id = %s]", value));
+      throw new DomainValidateException(
+          String.format(DomainErrorMessage.EMPLOYEE_ID_VALUE_NUMERIC.getMessage(), value)
+      );
     }
 
     if ((Integer.parseInt(value) <= 0) || (Integer.parseInt(value) >= 1000000000)) {
       throw new DomainValidateException(
-          String.format("従業員 ID は 1 以上 999999999 以下です。[id = %s]", value)
+          String.format(DomainErrorMessage.EMPLOYEE_ID_VALUE_RANGE.getMessage(), value)
       );
     }
   }

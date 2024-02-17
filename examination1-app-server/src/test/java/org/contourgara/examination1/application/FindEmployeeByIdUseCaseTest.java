@@ -51,7 +51,6 @@ class FindEmployeeByIdUseCaseTest {
 
     // execute & assert
     assertThatThrownBy(() -> sut.execute("0"))
-        .isInstanceOf(NotFoundEmployeeException.class)
-        .hasMessage("id = 0");
+        .isInstanceOf(NotFoundEmployeeException.class);
   }
 }

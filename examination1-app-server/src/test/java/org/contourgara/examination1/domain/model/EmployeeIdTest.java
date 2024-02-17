@@ -17,7 +17,7 @@ class EmployeeIdTest {
     // execute & assert
     assertThatCode(() -> new EmployeeId(value))
       .isInstanceOf(DomainValidateException.class)
-      .hasMessage(String.format("従業員 ID は 1 以上 999999999 以下です。[id = %s]", value));
+      .hasMessage(String.format("value length must be between 1 and 999999999. [value = %s]", value));
   }
 
   @ParameterizedTest
@@ -43,7 +43,7 @@ class EmployeeIdTest {
     // execute & assert
     assertThatCode(() -> new EmployeeId(value))
       .isInstanceOf(DomainValidateException.class)
-      .hasMessage(String.format("従業員 ID は数字です。[id = %s]", value));
+      .hasMessage(String.format("value must be numeric. [value = %s]", value));
   }
 
   @Test
