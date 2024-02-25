@@ -13,7 +13,7 @@ import org.junit.platform.suite.api.Suite;
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "org.contourgara.examination1.integration.steps")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "org.contourgara.examination1.acceptance.steps")
 @ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "not @Developing")
 public class EmployeesIT {
 }

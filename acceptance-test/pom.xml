@@ -11,7 +11,7 @@
 
     <artifactId>acceptance-test</artifactId>
     <name>${project.artifactId}</name>
-    <description>integration test</description>
+    <description>acceptance test</description>
 
     <properties>
         <java.version>17</java.version>
@@ -160,7 +160,7 @@
                 <artifactId>docker-compose-maven-plugin</artifactId>
                 <version>${docker-compose-maven-plugin.version}</version>
                 <configuration>
-                    <projectName>integration-test</projectName>
+                    <projectName>acceptance-test</projectName>
                     <file>../compose.yml</file>
                     <workDir>../</workDir>
                     <wait>
