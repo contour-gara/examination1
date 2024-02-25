@@ -23,6 +23,7 @@
         <cucumber.version>7.15.0</cucumber.version>
         <commons-validator.version>1.8.0</commons-validator.version>
 
+        <flywaydb.version>10.8.1</flywaydb.version>
         <maven-failsafe-plugin.version>3.2.5</maven-failsafe-plugin.version>
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <docker-compose-maven-plugin.version>1.0.0</docker-compose-maven-plugin.version>
@@ -48,6 +49,12 @@
         </dependency>
 
         <!-- Runtime -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- Provided -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -179,6 +186,37 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flywaydb.version}</version>
+                <configuration>
+                    <url>jdbc:postgresql://localhost:5432/sample</url>
+                    <user>user</user>
+                    <password>password</password>
+                    <target>2</target>
+                    <locations>
+                        <location>filesystem:../examination1-app-server/src/main/resources/db/migration</location>
+                    </locations>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-database-postgresql</artifactId>
+                        <version>${flywaydb.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
