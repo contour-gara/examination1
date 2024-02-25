@@ -1,5 +1,9 @@
 package org.contourgara.examination1.integration;
 
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+import static org.springframework.http.HttpStatus.OK;
+
 import java.sql.DriverManager;
 import com.github.database.rider.core.api.configuration.DBUnit;
 import com.github.database.rider.core.api.configuration.Orthography;
@@ -7,6 +11,7 @@ import com.github.database.rider.core.api.connection.ConnectionHolder;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.junit5.api.DBRider;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 @DBRider
@@ -23,10 +28,39 @@ class EmployeesIT {
           DB_PASSWORD
       );
 
+  @BeforeAll
+  static void setUpAll() {
+    baseURI = "http://localhost:8080";
+  }
+
   @Test
   @DataSet(value = "datasets/setup/2-employee.yml")
   @ExpectedDataSet(value = "datasets/expected/2-employee.yml")
-  void flywayの設定確認() {
+  void 全件検索した場合従業員情報のリストが返る() {
     // execute & assert
+    given()
+        .get("/v1/employees")
+        .then()
+        .statusCode(OK.value())
+        .body("employees[0].id", equalTo("1"))
+        .body("employees[0].firstName", equalTo("Taro"))
+        .body("employees[0].lastName", equalTo("Yamada"))
+        .body("employees[1].id", equalTo("2"))
+        .body("employees[1].firstName", equalTo("Jiro"))
+        .body("employees[1].lastName", equalTo("Yamada"));
+  }
+
+  @Test
+  @DataSet(value = "datasets/setup/1-employee.yml")
+  @ExpectedDataSet(value = "datasets/expected/1-employee.yml")
+  void ID検索した場合従業員情報が返る() {
+    // execute & assert
+    given()
+        .get("/v1/employees/1")
+        .then()
+        .statusCode(OK.value())
+        .body("id", equalTo("1"))
+        .body("firstName", equalTo("Taro"))
+        .body("lastName", equalTo("Yamada"));
   }
 }
