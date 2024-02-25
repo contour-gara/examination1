@@ -1,19 +1,32 @@
 package org.contourgara.examination1.integration;
 
-import static io.cucumber.junit.platform.engine.Constants.FILTER_TAGS_PROPERTY_NAME;
-import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
-import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
+import java.sql.DriverManager;
+import com.github.database.rider.core.api.configuration.DBUnit;
+import com.github.database.rider.core.api.configuration.Orthography;
+import com.github.database.rider.core.api.connection.ConnectionHolder;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
+import com.github.database.rider.junit5.api.DBRider;
+import org.junit.jupiter.api.Test;
 
-import org.junit.platform.suite.api.ConfigurationParameter;
-import org.junit.platform.suite.api.IncludeEngines;
-import org.junit.platform.suite.api.SelectClasspathResource;
-import org.junit.platform.suite.api.Suite;
+@DBRider
+@DBUnit(caseInsensitiveStrategy = Orthography.LOWERCASE)
+class EmployeesIT {
+  private static final String DB_URL = "jdbc:postgresql://localhost:5432/sample";
+  private static final String DB_USER = "user";
+  private static final String DB_PASSWORD = "password";
 
-@Suite
-@IncludeEngines("cucumber")
-@SelectClasspathResource("features")
-@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "org.contourgara.examination1.integration.steps")
-@ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "not @Developing")
-public class EmployeesIT {
+  private static final ConnectionHolder connectionHolder =
+      () -> DriverManager.getConnection(
+          DB_URL,
+          DB_USER,
+          DB_PASSWORD
+      );
+
+  @Test
+  @DataSet(value = "datasets/setup/2-employee.yml")
+  @ExpectedDataSet(value = "datasets/expected/2-employee.yml")
+  void flywayの設定確認() {
+    // execute & assert
+  }
 }
