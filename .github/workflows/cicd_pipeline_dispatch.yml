@@ -88,4 +88,4 @@ jobs:
 
       - name: Acceptance test
         working-directory: ./acceptance-test
-        run: mvn test -Dtest=EmployeesIT -Dspring.profiles.active=render
+        run: mvn test -Dtest=EmployeesIT
