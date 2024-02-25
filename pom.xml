@@ -14,5 +14,6 @@
     <modules>
         <module>examination1-app-server</module>
         <module>integration-test</module>
+        <module>acceptance-test</module>
     </modules>
 </project>
