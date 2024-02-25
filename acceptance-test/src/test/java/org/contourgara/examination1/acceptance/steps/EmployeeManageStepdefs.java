@@ -1,4 +1,4 @@
-package org.contourgara.examination1.integration.steps;
+package org.contourgara.examination1.acceptance.steps;
 
 import static io.restassured.RestAssured.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
@@ -6,7 +6,7 @@ import static java.util.Objects.isNull;
 import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.Matchers.*;
 
-import org.contourgara.examination1.integration.Configuration;
+import org.contourgara.examination1.acceptance.Configuration;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.ja.かつ;
 import io.cucumber.java.ja.ならば;

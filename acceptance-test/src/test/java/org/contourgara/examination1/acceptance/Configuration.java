@@ -1,4 +1,4 @@
-package org.contourgara.examination1.integration;
+package org.contourgara.examination1.acceptance;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package org.contourgara.examination1.integration.steps;
+package org.contourgara.examination1.acceptance.steps;
 
 import io.cucumber.spring.ScenarioScope;
 import io.restassured.response.Response;
