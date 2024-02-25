@@ -63,7 +63,7 @@ jobs:
         run: mvn clean verify
 
   cd:
-    needs: [unit_test, integration_test]
+    needs: [unit_test, integration_test, acceptance_test_local]
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
