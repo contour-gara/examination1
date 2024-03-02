@@ -10,7 +10,3 @@ spring:
       maximum-pool-size: 5
   flyway:
     enabled: false
-
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
